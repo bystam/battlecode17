@@ -82,33 +82,33 @@ public abstract class RobotBase implements Robot {
     }
 
     
-    public boolean canSenseTree(int i) {
-        return rc.canSenseTree(i);
+    public boolean canSenseTree(int id) {
+        return rc.canSenseTree(id);
     }
 
     
-    public boolean canSenseRobot(int i) {
-        return rc.canSenseRobot(i);
+    public boolean canSenseRobot(int id) {
+        return rc.canSenseRobot(id);
     }
 
     
-    public boolean canSenseBullet(int i) {
-        return rc.canSenseBullet(i);
+    public boolean canSenseBullet(int id) {
+        return rc.canSenseBullet(id);
     }
 
     
-    public TreeInfo senseTree(int i) throws GameActionException {
-        return rc.senseTree(i);
+    public TreeInfo senseTree(int id) throws GameActionException {
+        return rc.senseTree(id);
     }
 
     
-    public RobotInfo senseRobot(int i) throws GameActionException {
-        return rc.senseRobot(i);
+    public RobotInfo senseRobot(int id) throws GameActionException {
+        return rc.senseRobot(id);
     }
 
     
-    public BulletInfo senseBullet(int i) throws GameActionException {
-        return rc.senseBullet(i);
+    public BulletInfo senseBullet(int id) throws GameActionException {
+        return rc.senseBullet(id);
     }
 
     
@@ -215,8 +215,8 @@ public abstract class RobotBase implements Robot {
     }
 
     
-    public boolean canShake(int i) {
-        return rc.canShake(i);
+    public boolean canShake(int id) {
+        return rc.canShake(id);
     }
 
     
@@ -225,8 +225,8 @@ public abstract class RobotBase implements Robot {
     }
 
     
-    public void shake(int i) throws GameActionException {
-        rc.shake(i);
+    public void shake(int id) throws GameActionException {
+        rc.shake(id);
     }
     
     public boolean canShake() {
@@ -239,8 +239,8 @@ public abstract class RobotBase implements Robot {
     }
 
     
-    public boolean canInteractWithTree(int i) {
-        return rc.canInteractWithTree(i);
+    public boolean canInteractWithTree(int id) {
+        return rc.canInteractWithTree(id);
     }
 
 
@@ -249,8 +249,8 @@ public abstract class RobotBase implements Robot {
     }
 
     
-    public boolean canInteractWithRobot(int i) {
-        return rc.canInteractWithRobot(i);
+    public boolean canInteractWithRobot(int id) {
+        return rc.canInteractWithRobot(id);
     }
 
     
