@@ -10,6 +10,7 @@ public abstract class RobotBase implements Robot {
     protected RobotController rc;
     protected MapState map;
     protected SharedMemory memory;
+    protected Tools tools;
 
     public RobotBase(RobotController r){
         rc = r;
@@ -272,5 +273,5 @@ public abstract class RobotBase implements Robot {
         }
     }
 
-    public abstract void step();
+    public abstract void step() throws GameActionException;
 }

@@ -1,8 +1,12 @@
 package common;
 
+import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by jens on 2017-01-10.
@@ -14,7 +18,6 @@ public class Tools {
     public Tools(RobotController r){
         rc = r;
     }
-
 
     public void resign() {
         rc.resign();
@@ -44,4 +47,7 @@ public class Tools {
         return rc.readBroadcast(i);
     }
 
+    public List<Direction> getDirections(){
+        return Arrays.asList(Direction.getEast(), Direction.getNorth(), Direction.getWest(), Direction.getSouth());
+    }
 }
