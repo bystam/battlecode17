@@ -14,7 +14,6 @@ public strictfp class RobotPlayer {
         // This is the RobotController object. You use it to perform actions from this robot,
         // and to get information on its current status.
         RobotPlayer.rc = rc;
-
         // Here, we've separated the controls into a different method for each RobotType.
         // You can add the missing ones or rewrite this into your own control structure.
         switch (rc.getType()) {
@@ -28,6 +27,9 @@ public strictfp class RobotPlayer {
                 runSoldier();
                 break;
             case LUMBERJACK:
+                runLumberjack();
+                break;
+            case TANK:
                 runLumberjack();
                 break;
         }
@@ -50,8 +52,9 @@ public strictfp class RobotPlayer {
                     rc.hireGardener(dir);
                 }
 
+
                 // Move randomly
-                tryMove(randomDirection());
+                tryMove(Direction.getSouth());
 
                 // Broadcast archon's location for other robots on the team to know
                 MapLocation myLocation = rc.getLocation();
