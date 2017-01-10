@@ -10,8 +10,7 @@ import battlecode.common.RobotController;
  */
 public final class SharedMemory {
 
-    private static final int ARCHON_Y = 1;
-    private static final int ARCHON_X = 0;
+    private static final int ARCHON_POS = 0;
 
     private final RobotController rc;
 
@@ -20,11 +19,24 @@ public final class SharedMemory {
     }
 
     public MapLocation getArchonLocation() throws GameActionException {
-        return new MapLocation(rc.readBroadcast(ARCHON_X), rc.readBroadcast(ARCHON_Y));
+        return getLocation(ARCHON_POS);
     }
 
     public void setArchonLocation(MapLocation location) throws GameActionException {
-        rc.broadcast(ARCHON_X, (int)location.x);
-        rc.broadcast(ARCHON_Y, (int)location.y);
+        setLocation(location, ARCHON_POS);
+    }
+
+    private MapLocation getLocation(int i) throws GameActionException {
+        int both = rc.readBroadcast(i);
+        int x = both & 0xFFFF;
+        int y = (both >> 16) & 0xFFFF;
+        return new MapLocation(x, y);
+    }
+
+    private void setLocation(MapLocation location, int i) throws GameActionException {
+        int x = (int)location.x;
+        int y = (int)location.y;
+        int both = (y << 16) | x;
+        rc.broadcast(i, both);
     }
 }
