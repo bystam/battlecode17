@@ -2,6 +2,8 @@ package common;
 
 import battlecode.common.*;
 
+import java.util.Arrays;
+
 /**
  * Created by jens on 2017-01-10.
  */
@@ -285,7 +287,6 @@ public abstract class RobotBase implements Robot {
                 if (color != null) {
                     tools.setIndicatorDot(getLocation(), color[0], color[1], color[2]);
                 }
-
                 step();
 
                 Clock.yield();

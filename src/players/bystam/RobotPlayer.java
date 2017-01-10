@@ -27,10 +27,11 @@ public strictfp class RobotPlayer {
     }
 
     private static Gardener getGardener(RobotController rc){
-        float f = new Random().nextFloat();
-        if (f < 0.3) {
+        int id = rc.getID() % 3;
+        System.out.println(id);
+        if (id == 1) {
             return new WateringGardener(rc);
-        } else if (f < 0.7) {
+        } else if (id == 2) {
             return new JunglerGardener(rc);
         }
         return new PlantingGardener(rc);

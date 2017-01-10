@@ -35,8 +35,8 @@ public class PlantingGardener extends Gardener{
         return hasPlanted;
     }
 
-    @Override
+   /* @Override
     public int[] getColor() {
         return new int[] { 0, 255, 0 };
-    }
+    }*/
 }

@@ -17,6 +17,7 @@ public class JunglerGardener extends Gardener {
 
     @Override
     public void step() throws GameActionException {
+        System.out.println("paralyzed");
         TreeInfo[] trees = senseNearbyTrees();
 
         Optional<TreeInfo> neutralBulletTree = getNeutralBulletTree(trees);
@@ -34,11 +35,16 @@ public class JunglerGardener extends Gardener {
         if (neutralRobotTree.isPresent()) {
             TreeInfo tree = neutralRobotTree.get();
 
+
             for (Direction dir : tools.getDirections()) {
                 if (canBuildRobot(RobotType.LUMBERJACK, dir)) {
                     buildRobot(RobotType.LUMBERJACK, dir);
                 }
             }
+        }
+
+        if(!hasMoved()){
+            moveInAnyDirection();
         }
     }
 

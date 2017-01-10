@@ -1,10 +1,11 @@
-package strategies.maxproduction;
+package players.jens;
 
 import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
 import common.robots.Gardener;
-
-import java.util.Random;
+import strategies.maxproduction.MaxProductionArchon;
+import strategies.maxproduction.PlantingGardener;
+import strategies.maxproduction.WateringGardener;
 
 /**
  * Created by jens on 2017-01-10.
@@ -23,7 +24,6 @@ public class RobotPlayer {
     }
 
     private static Gardener getGardener(RobotController rc){
-        Random r = new Random();
-        return r.nextFloat() > 0.3 ? new PlantingGardener(rc) : new WateringGardener(rc);
+        return Math.random() > 0.3 ? new PlantingGardener(rc) : new WateringGardener(rc);
     }
 }

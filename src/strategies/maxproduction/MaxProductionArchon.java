@@ -24,6 +24,9 @@ public class MaxProductionArchon extends Archon {
 
     @Override
     public void step() throws GameActionException{
+        /*if(map.getTeamBullets() > 120){
+            tools.donate(map.getTeamBullets());
+        }*/
         while(!hireInAnyDirection() && !hasMoved()){
             moveInAnyDirection();
         }
