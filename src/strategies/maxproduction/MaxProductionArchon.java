@@ -24,7 +24,7 @@ public class MaxProductionArchon extends Archon {
 
     @Override
     public void step() throws GameActionException{
-        while(!hireInAnyDirection()){
+        while(!hireInAnyDirection() && !hasMoved()){
             moveInAnyDirection();
         }
     }
@@ -33,6 +33,7 @@ public class MaxProductionArchon extends Archon {
         for(Direction d : tools.getDirections()){
             if(canMove(d)){
                 move(d);
+                return;
             }
         }
     }
@@ -43,8 +44,6 @@ public class MaxProductionArchon extends Archon {
             if(this.canHireGardener(d)){
                 this.hireGardener(d);
                 break;
-            } else{
-                System.out.println("CANT HIRE A GARDENER");
             }
         }
         return hasHired;

@@ -16,16 +16,17 @@ public class PlantingGardener extends Gardener{
 
     @Override
     public void step() throws GameActionException {
-        while(!plantTreeInAnyDirection()){
+        if(!plantTreeInAnyDirection()){
             moveInAnyDirection();
+            plantTreeInAnyDirection();
         }
-
     }
 
     private void moveInAnyDirection() throws GameActionException{
         for(Direction d : tools.getDirections()){
             if(canMove(d)){
                 move(d);
+                return;
             }
         }
     }

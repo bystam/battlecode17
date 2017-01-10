@@ -16,9 +16,9 @@ public class WateringGardener extends Gardener{
 
     @Override
     public void step() throws GameActionException {
-        while(true){
-            waterTree();
+        if(!waterTree()){
             moveInAnyDirection();
+            waterTree();
         }
     }
 

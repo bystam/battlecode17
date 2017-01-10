@@ -14,6 +14,9 @@ public abstract class RobotBase implements Robot {
 
     public RobotBase(RobotController r){
         rc = r;
+        map = new MapState(rc);
+        memory = new SharedMemory(rc);
+        tools = new Tools(rc);
     }
 
     public int getID() {
