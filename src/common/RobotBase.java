@@ -262,6 +262,10 @@ public abstract class RobotBase implements Robot {
         rc.disintegrate();
     }
 
+    public int[] getColor() {
+        return null;
+    }
+
     protected void moveInAnyDirection() throws GameActionException{
         while(true){
             Direction dir = tools.randomDirection();
@@ -278,6 +282,12 @@ public abstract class RobotBase implements Robot {
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode
             try {
                 step();
+
+                int[] color = getColor();
+                if (color != null) {
+                    tools.setIndicatorDot(getLocation(), color[0], color[1], color[2]);
+                }
+
                 Clock.yield();
             } catch (Exception e) {
                 System.out.println("Archon Exception");

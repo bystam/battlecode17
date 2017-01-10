@@ -49,4 +49,9 @@ public class JunglerGardener extends Gardener {
     Optional<TreeInfo> getNeutralRobotTree(TreeInfo[] trees) {
         return Arrays.stream(trees).filter( (t) -> t.containedRobot != null ).findFirst();
     }
+
+    @Override
+    public int[] getColor() {
+        return new int[] { 255, 0, 0 };
+    }
 }
