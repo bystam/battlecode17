@@ -281,12 +281,12 @@ public abstract class RobotBase implements Robot {
         while (true) {
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode
             try {
-                step();
-
                 int[] color = getColor();
                 if (color != null) {
                     tools.setIndicatorDot(getLocation(), color[0], color[1], color[2]);
                 }
+
+                step();
 
                 Clock.yield();
             } catch (Exception e) {
