@@ -7,7 +7,9 @@ import battlecode.common.*;
  */
 public abstract class RobotBase implements Robot {
 
-    RobotController rc;
+    protected RobotController rc;
+    protected MapState map;
+    protected SharedMemory memory;
 
     public RobotBase(RobotController r){
         rc = r;
@@ -178,12 +180,6 @@ public abstract class RobotBase implements Robot {
     public boolean hasAttacked() {
         return rc.hasAttacked();
     }
-
-    
-    public boolean isBuildReady() {
-        return rc.isBuildReady();
-    }
-
     
     public boolean canMove(Direction direction) {
         return rc.canMove(direction);
@@ -191,235 +187,90 @@ public abstract class RobotBase implements Robot {
 
     
     public boolean canMove(Direction direction, float v) {
-        return false;
+        return rc.canMove(direction, v);
     }
 
     
     public boolean canMove(MapLocation mapLocation) {
-        return false;
+        return rc.canMove(mapLocation);
     }
 
     
     public void move(Direction direction) throws GameActionException {
-
+        rc.move(direction);
     }
 
     
     public void move(Direction direction, float v) throws GameActionException {
-
+        rc.move(direction, v);
     }
 
     
     public void move(MapLocation mapLocation) throws GameActionException {
-
+        rc.move(mapLocation);
     }
-
-    
-    public boolean canStrike() {
-        return false;
-    }
-
-    
-    public void strike() throws GameActionException {
-
-    }
-
-    
-    public boolean canFireSingleShot() {
-        return false;
-    }
-
-    
-    public boolean canFireTriadShot() {
-        return false;
-    }
-
-    
-    public boolean canFirePentadShot() {
-        return false;
-    }
-
-    
-    public void fireSingleShot(Direction direction) throws GameActionException {
-
-    }
-
-    
-    public void fireTriadShot(Direction direction) throws GameActionException {
-
-    }
-
-    
-    public void firePentadShot(Direction direction) throws GameActionException {
-
-    }
-
-    
-    public boolean canChop(MapLocation mapLocation) {
-        return false;
-    }
-
-    
-    public boolean canChop(int i) {
-        return false;
-    }
-
-    
-    public void chop(MapLocation mapLocation) throws GameActionException {
-
-    }
-
-    
-    public void chop(int i) throws GameActionException {
-
-    }
-
     
     public boolean canShake(MapLocation mapLocation) {
-        return false;
+        return rc.canShake(mapLocation);
     }
 
     
     public boolean canShake(int i) {
-        return false;
+        return rc.canShake(i);
     }
 
     
     public void shake(MapLocation mapLocation) throws GameActionException {
-
+        rc.shake(mapLocation);
     }
 
     
     public void shake(int i) throws GameActionException {
-
+        rc.shake(i);
     }
-
-    
-    public boolean canWater(MapLocation mapLocation) {
-        return false;
-    }
-
-    
-    public boolean canWater(int i) {
-        return false;
-    }
-
-    
-    public void water(MapLocation mapLocation) throws GameActionException {
-
-    }
-
-    
-    public void water(int i) throws GameActionException {
-
-    }
-
-    
-    public boolean canWater() {
-        return false;
-    }
-
     
     public boolean canShake() {
-        return false;
+        return rc.canShake();
     }
 
     
     public boolean canInteractWithTree(MapLocation mapLocation) {
-        return false;
+        return rc.canInteractWithTree(mapLocation);
     }
 
     
     public boolean canInteractWithTree(int i) {
-        return false;
+        return rc.canInteractWithTree(i);
     }
 
-    
-    public void broadcast(int i, int i1) throws GameActionException {
 
-    }
-
-    
-    public int readBroadcast(int i) throws GameActionException {
-        return 0;
-    }
-
-    
-    public boolean hasRobotBuildRequirements(RobotType robotType) {
-        return false;
-    }
-
-    
-    public boolean hasTreeBuildRequirements() {
-        return false;
-    }
-
-    
-    public boolean canBuildRobot(RobotType robotType, Direction direction) {
-        return false;
-    }
-
-    
-    public void buildRobot(RobotType robotType, Direction direction) throws GameActionException {
-
-    }
-
-    
-    public boolean canPlantTree(Direction direction) {
-        return false;
-    }
-
-    
-    public void plantTree(Direction direction) throws GameActionException {
-
-    }
-
-    
-    public boolean canHireGardener(Direction direction) {
-        return false;
-    }
-
-    
-    public void hireGardener(Direction direction) throws GameActionException {
-
-    }
-
-    
-    public void donate(float v) throws GameActionException {
-
-    }
-
-    
     public boolean canInteractWithRobot(MapLocation mapLocation) {
-        return false;
+        return rc.canInteractWithRobot(mapLocation);
     }
 
     
     public boolean canInteractWithRobot(int i) {
-        return false;
+        return rc.canInteractWithRobot(i);
     }
 
     
     public void disintegrate() {
-
+        rc.disintegrate();
     }
 
-    
-    public void resign() {
-
+    @Override
+    public void run() {
+        while (true) {
+            // Try/catch blocks stop unhandled exceptions, which cause your robot to explode
+            try {
+                step();
+                Clock.yield();
+            } catch (Exception e) {
+                System.out.println("Archon Exception");
+                e.printStackTrace();
+            }
+        }
     }
 
-    
-    public void setIndicatorDot(MapLocation mapLocation, int i, int i1, int i2) throws GameActionException {
-
-    }
-
-    
-    public void setIndicatorLine(MapLocation mapLocation, MapLocation mapLocation1, int i, int i1, int i2) throws GameActionException {
-
-    }
-    
-    public long getControlBits() {
-        return 0;
-    }
+    public abstract void step();
 }
