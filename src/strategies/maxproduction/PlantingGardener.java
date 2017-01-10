@@ -22,15 +22,6 @@ public class PlantingGardener extends Gardener{
         }
     }
 
-    private void moveInAnyDirection() throws GameActionException{
-        for(Direction d : tools.getDirections()){
-            if(canMove(d)){
-                move(d);
-                return;
-            }
-        }
-    }
-
     private boolean plantTreeInAnyDirection() throws GameActionException{
         boolean hasPlanted = false;
         for(Direction d : tools.getDirections()){

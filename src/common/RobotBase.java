@@ -262,6 +262,16 @@ public abstract class RobotBase implements Robot {
         rc.disintegrate();
     }
 
+    protected void moveInAnyDirection() throws GameActionException{
+        while(true){
+            Direction dir = tools.randomDirection();
+            if(canMove(dir)){
+                move(dir);
+                return;
+            }
+        }
+    }
+
     @Override
     public void run() {
         while (true) {

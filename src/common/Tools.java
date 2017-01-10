@@ -50,4 +50,8 @@ public class Tools {
     public List<Direction> getDirections(){
         return Arrays.asList(Direction.getEast(), Direction.getNorth(), Direction.getWest(), Direction.getSouth());
     }
+
+    public Direction randomDirection() {
+        return new Direction((float)Math.random() * 2 * (float)Math.PI);
+    }
 }

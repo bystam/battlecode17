@@ -22,14 +22,6 @@ public class WateringGardener extends Gardener{
         }
     }
 
-    private void moveInAnyDirection() throws GameActionException{
-        for(Direction d : tools.getDirections()){
-            if(canMove(d)){
-                move(d);
-            }
-        }
-    }
-
     private boolean waterTree() throws GameActionException{
         boolean hasWatered = false;
 

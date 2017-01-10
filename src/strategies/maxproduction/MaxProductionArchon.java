@@ -29,15 +29,6 @@ public class MaxProductionArchon extends Archon {
         }
     }
 
-    private void moveInAnyDirection() throws GameActionException{
-        for(Direction d : tools.getDirections()){
-            if(canMove(d)){
-                move(d);
-                return;
-            }
-        }
-    }
-
     private boolean hireInAnyDirection() throws GameActionException{
         boolean hasHired = false;
         for(Direction d : tools.getDirections()){
