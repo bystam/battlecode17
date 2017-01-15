@@ -1,4 +1,4 @@
-package strategies.util;
+package strategies.mapping;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
@@ -22,6 +22,8 @@ public class MappingScout extends Scout {
 
     @Override
     public void step() throws GameActionException {
+
+        memory.setHasScout(true);
 
         if (bottomLeftCorner == null) {
             Direction southWest = new Direction(-1, -1);

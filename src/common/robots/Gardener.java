@@ -62,4 +62,15 @@ public abstract class Gardener extends RobotBase {
     public boolean isBuildReady() {
         return rc.isBuildReady();
     }
+
+
+    public boolean buildInAnyDirection(RobotType robotType) throws GameActionException {
+        for (Direction direction : tools.getDirections()) {
+            if (canBuildRobot(robotType, direction)) {
+                buildRobot(robotType, direction);
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -10,7 +10,9 @@ import battlecode.common.RobotController;
  */
 public final class SharedMemory {
 
-    private static final int ARCHON_POS = 0;
+    // booleans
+    private static final int BOOL_FIELD = 16;
+    private static final int HAS_SCOUT_BIT = 0;
 
     private final RobotController rc;
 
@@ -18,13 +20,15 @@ public final class SharedMemory {
         this.rc = rc;
     }
 
-    public MapLocation getArchonLocation() throws GameActionException {
-        return getLocation(ARCHON_POS);
+    public boolean hasScout() throws GameActionException {
+        return isBitSet(BOOL_FIELD, HAS_SCOUT_BIT);
     }
 
-    public void setArchonLocation(MapLocation location) throws GameActionException {
-        setLocation(location, ARCHON_POS);
+    public void setHasScout(boolean hasScout) throws GameActionException {
+        setBit(BOOL_FIELD, HAS_SCOUT_BIT, hasScout);
     }
+
+    // locations
 
     private MapLocation getLocation(int i) throws GameActionException {
         int both = rc.readBroadcast(i);
@@ -38,5 +42,25 @@ public final class SharedMemory {
         int y = (int)location.y;
         int both = (y << 16) | x;
         rc.broadcast(i, both);
+    }
+
+
+    // booleans
+
+    private boolean isBitSet(int i, int bit) throws GameActionException {
+        int data = rc.readBroadcast(i);
+        int mask = (1 << bit);
+        return (data & mask) != 0;
+    }
+
+    private void setBit(int i, int bit, boolean set) throws GameActionException {
+        int data = rc.readBroadcast(i);
+        int mask = (1 << bit);
+        if (set) {
+            data = data | mask;
+        } else {
+            data = data & ~mask;
+        }
+        rc.broadcast(i, data);
     }
 }
