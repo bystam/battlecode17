@@ -3,10 +3,7 @@ package common.robots;
 import battlecode.common.*;
 import common.wrappers.MapState;
 import common.Robot;
-import common.wrappers.SharedMemory;
 import common.wrappers.Tools;
-
-import java.util.Arrays;
 
 /**
  * Created by jens on 2017-01-10.
@@ -15,13 +12,11 @@ public abstract class RobotBase implements Robot {
 
     protected RobotController rc;
     protected MapState map;
-    protected SharedMemory memory;
     protected Tools tools;
 
     public RobotBase(RobotController r){
         rc = r;
         map = new MapState(rc);
-        memory = new SharedMemory(rc);
         tools = new Tools(rc);
     }
 

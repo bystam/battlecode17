@@ -10,8 +10,11 @@ import common.robots.Gardener;
  */
 public class MappingGardener extends Gardener {
 
+    private final MappingMemory memory;
+
     public MappingGardener(RobotController r) {
         super(r);
+        memory = new MappingMemory(r);
     }
 
     @Override

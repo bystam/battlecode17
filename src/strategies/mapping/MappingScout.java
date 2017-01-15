@@ -12,12 +12,15 @@ import common.robots.Scout;
  */
 public class MappingScout extends Scout {
 
+    private final MappingMemory memory;
+
     private MapLocation bottomLeftCorner;
     private MapGrid grid;
 
 
     public MappingScout(RobotController r) {
         super(r);
+        memory = new MappingMemory(r);
     }
 
     @Override
