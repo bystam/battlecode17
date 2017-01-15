@@ -27,7 +27,6 @@ public class JunglerGardener extends Gardener {
             TreeInfo tree = neutralBulletTree.get();
             if (canShake() && tree.location.isWithinDistance(getLocation(), getType().strideRadius)) {
                 shake(tree.getID());
-                System.out.println("shake");
             } else if (canMove(tree.location)) {
                 move(tree.location);
             }
@@ -38,7 +37,6 @@ public class JunglerGardener extends Gardener {
             for (Direction dir : tools.getDirections()) {
                 if (canBuildRobot(RobotType.LUMBERJACK, dir)) {
                     buildRobot(RobotType.LUMBERJACK, dir);
-                    System.out.println("build");
                 }
             }
         }
