@@ -12,7 +12,7 @@ import common.robots.Scout;
  */
 public class MappingScout extends Scout {
 
-    private MapLocation topLeftCorner;
+    private MapLocation bottomLeftCorner;
     private MapGrid grid;
 
 
@@ -23,18 +23,18 @@ public class MappingScout extends Scout {
     @Override
     public void step() throws GameActionException {
 
-        if (topLeftCorner == null) {
-            Direction northWest = new Direction(-1, -1);
-            boolean foundCorner = moveTowardsCorner(northWest);
+        if (bottomLeftCorner == null) {
+            Direction southWest = new Direction(-1, -1);
+            boolean foundCorner = moveTowardsCorner(southWest);
             if (foundCorner) {
-                topLeftCorner = getLocation();
+                bottomLeftCorner = getLocation();
             }
         } else if (grid == null) {
-            Direction southEast = new Direction(1, 1);
-            boolean foundCorner = moveTowardsCorner(southEast);
+            Direction northEast = new Direction(1, 1);
+            boolean foundCorner = moveTowardsCorner(northEast);
             if (foundCorner) {
                 MapLocation bottomRightCorner = getLocation();
-                grid = new MapGrid(topLeftCorner, bottomRightCorner);
+                grid = new MapGrid(bottomLeftCorner, bottomRightCorner);
             }
         } else {
 
