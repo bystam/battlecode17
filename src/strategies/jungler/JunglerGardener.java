@@ -19,12 +19,13 @@ public class JunglerGardener extends Gardener {
     public void step() throws GameActionException {
         TreeInfo[] trees = senseNearbyTrees();
 
+
         Optional<TreeInfo> neutralBulletTree = getNeutralBulletTree(trees);
         Optional<TreeInfo> neutralRobotTree = getNeutralRobotTree(trees);
 
         if (neutralBulletTree.isPresent()) {
             TreeInfo tree = neutralBulletTree.get();
-            if (canShake() && tree.location.isWithinDistance(getLocation(), getType().strideRadius) && tree.team == null) {
+            if (canShake() && tree.location.isWithinDistance(getLocation(), getType().strideRadius)) {
                 shake(tree.getID());
                 System.out.println("shake");
             } else if (canMove(tree.location)) {

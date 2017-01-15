@@ -1,4 +1,4 @@
-package common;
+package common.wrappers;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
@@ -49,6 +49,18 @@ public class Tools {
 
     public List<Direction> getDirections(){
         return Arrays.asList(Direction.getEast(), Direction.getNorth(), Direction.getWest(), Direction.getSouth());
+    }
+
+    public Direction getHorizontalPartOfDirection(Direction direction) {
+        boolean facingEast = direction.radians < Math.PI/2 && direction.radians > -Math.PI/2;
+        float dx = facingEast ? 1.0f : -1.0f;
+        return new Direction(dx, 0.0f);
+    }
+
+    public Direction getVerticalPartOfDirection(Direction direction) {
+        boolean facingNorth = direction.radians > 0.0;
+        float dy = facingNorth ? -1.0f : 1.0f;
+        return new Direction(0.0f, dy);
     }
 
     public Direction randomDirection() {

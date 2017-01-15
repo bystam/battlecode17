@@ -3,7 +3,6 @@ package common.robots;
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
-import common.RobotBase;
 
 /**
  * Created by jens on 2017-01-10.

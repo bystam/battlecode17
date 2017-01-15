@@ -1,4 +1,4 @@
-package common;
+package common.wrappers;
 
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;

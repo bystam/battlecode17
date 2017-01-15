@@ -1,4 +1,4 @@
-package common;
+package common.wrappers;
 
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
@@ -14,7 +14,7 @@ public final class SharedMemory {
 
     private final RobotController rc;
 
-    SharedMemory(RobotController rc) {
+    public SharedMemory(RobotController rc) {
         this.rc = rc;
     }
 

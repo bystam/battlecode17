@@ -1,7 +1,6 @@
 package common.robots;
 
 import battlecode.common.*;
-import common.RobotBase;
 
 /**
  * Created by jens on 2017-01-10.
