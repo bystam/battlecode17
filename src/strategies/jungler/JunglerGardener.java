@@ -17,7 +17,6 @@ public class JunglerGardener extends Gardener {
 
     @Override
     public void step() throws GameActionException {
-        System.out.println("paralyzed");
         TreeInfo[] trees = senseNearbyTrees();
 
         Optional<TreeInfo> neutralBulletTree = getNeutralBulletTree(trees);
@@ -27,6 +26,7 @@ public class JunglerGardener extends Gardener {
             TreeInfo tree = neutralBulletTree.get();
             if (canShake() && tree.location.isWithinDistance(getLocation(), getType().strideRadius) && tree.team == null) {
                 shake(tree.getID());
+                System.out.println("shake");
             } else if (canMove(tree.location)) {
                 move(tree.location);
             }
@@ -34,11 +34,10 @@ public class JunglerGardener extends Gardener {
 
         if (neutralRobotTree.isPresent()) {
             TreeInfo tree = neutralRobotTree.get();
-
-
             for (Direction dir : tools.getDirections()) {
                 if (canBuildRobot(RobotType.LUMBERJACK, dir)) {
                     buildRobot(RobotType.LUMBERJACK, dir);
+                    System.out.println("build");
                 }
             }
         }
@@ -56,8 +55,8 @@ public class JunglerGardener extends Gardener {
         return Arrays.stream(trees).filter( (t) -> t.containedRobot != null ).findFirst();
     }
 
-    @Override
+/*    @Override
     public int[] getColor() {
         return new int[] { 255, 0, 0 };
-    }
+    }*/
 }

@@ -249,16 +249,6 @@ public abstract class RobotBase implements Robot {
         return rc.canInteractWithTree(id);
     }
 
-
-    public boolean canInteractWithRobot(MapLocation mapLocation) {
-        return rc.canInteractWithRobot(mapLocation);
-    }
-
-    
-    public boolean canInteractWithRobot(int id) {
-        return rc.canInteractWithRobot(id);
-    }
-
     
     public void disintegrate() {
         rc.disintegrate();
