@@ -15,11 +15,12 @@ public class MemoryBase {
         public static final int MAX_PRODCTION = 100;
         public static final int JUNGLER = 200;
         public static final int MAPPING = 300;
+        public static final int FORTRESS = 400;
 
         private Offsets() {}
     }
 
-    private final RobotController rc;
+    protected final RobotController rc;
     private final int offset;
 
     protected MemoryBase(RobotController rc, int offset) {
@@ -65,6 +66,16 @@ public class MemoryBase {
         } else {
             data = data & ~mask;
         }
+        rc.broadcast(i, data);
+    }
+
+    protected int getInt(int i) throws GameActionException {
+        i += offset;
+        return rc.readBroadcast(i);
+    }
+
+    protected void setInt(int i, int data) throws GameActionException {
+        i += offset;
         rc.broadcast(i, data);
     }
 }

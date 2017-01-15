@@ -191,8 +191,8 @@ public abstract class RobotBase implements Robot {
     }
 
 
-    public boolean canMove(Direction direction, float v) {
-        return rc.canMove(direction, v);
+    public boolean canMove(Direction direction, float distance) {
+        return rc.canMove(direction, distance);
     }
 
 
@@ -306,10 +306,11 @@ public abstract class RobotBase implements Robot {
             return false;
         }
 
-        boolean didMoveToEdge = binarySearchMoveTowards(horizontally);
+      /*  boolean didMoveToEdge = binarySearchMoveTowards(horizontally);
         if (didMoveToEdge) {
+            System.out.println("I moved horizontally after a binary search!");
             return false;
-        }
+        }*/
 
         Direction vertically = tools.getVerticalPartOfDirection(direction);
         if (canMove(vertically)) {
@@ -317,7 +318,7 @@ public abstract class RobotBase implements Robot {
             return false;
         }
 
-        didMoveToEdge = binarySearchMoveTowards(vertically);
+        boolean didMoveToEdge = binarySearchMoveTowards(vertically);
         if (didMoveToEdge) {
             return false;
         }
@@ -327,7 +328,7 @@ public abstract class RobotBase implements Robot {
 
     // return true if a move was successful, false otherwise
     private boolean binarySearchMoveTowards(Direction direction) throws GameActionException {
-        final float tolerance = 0.05f;
+        final float tolerance = (getType().bodyRadius*2) + 50f;
         float high = getType().strideRadius;
         float low = tolerance;
         while (high - low > tolerance) {
