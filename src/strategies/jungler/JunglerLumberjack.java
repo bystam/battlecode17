@@ -23,11 +23,8 @@ public class JunglerLumberjack extends Lumberjack {
 
         if (neutralRobotTree.isPresent()) {
             TreeInfo tree = neutralRobotTree.get();
-            //boolean second =  tree.location.isWithinDistance(getLocation(), getType().strideRadius);
             boolean first = canChop(tree.getID());
-            //System.out.println("first: " + first);
             if (first) {
-                System.out.println("chop");
                 chop(tree.getID());
             } else if (canMove(tree.location)) {
                 move(tree.location);

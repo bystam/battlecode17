@@ -329,8 +329,8 @@ public abstract class RobotBase implements Robot {
     private boolean binarySearchMoveTowards(Direction direction) throws GameActionException {
         final float tolerance = 0.05f;
         float high = getType().strideRadius;
-        float low = 0.0f;
-        while (high - low < tolerance) {
+        float low = tolerance;
+        while (high - low > tolerance) {
             float middle = (high + low) / 2;
             if (canMove(direction, middle)) {
                 low = middle;

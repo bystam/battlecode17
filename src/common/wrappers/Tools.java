@@ -59,7 +59,7 @@ public class Tools {
 
     public Direction getVerticalPartOfDirection(Direction direction) {
         boolean facingNorth = direction.radians > 0.0;
-        float dy = facingNorth ? -1.0f : 1.0f;
+        float dy = facingNorth ? 1.0f : -1.0f;
         return new Direction(0.0f, dy);
     }
 

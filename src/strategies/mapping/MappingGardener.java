@@ -4,11 +4,12 @@ import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
 import battlecode.common.RobotType;
 import common.robots.Gardener;
+import strategies.maxproduction.WateringGardener;
 
 /**
  * Created by fredrikbystam on 15/01/17.
  */
-public class MappingGardener extends Gardener {
+public class MappingGardener extends WateringGardener {
 
     private final MappingMemory memory;
 
@@ -24,6 +25,8 @@ public class MappingGardener extends Gardener {
             if (success) {
                 memory.setHasScout(true);
             }
+        } else {
+            super.step();
         }
     }
 }

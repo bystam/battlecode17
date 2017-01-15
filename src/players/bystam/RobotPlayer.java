@@ -6,6 +6,7 @@ import strategies.jungler.JunglerGardener;
 import strategies.jungler.JunglerLumberjack;
 import strategies.mapping.MappingGardener;
 import strategies.mapping.MappingMemory;
+import strategies.mapping.MappingScout;
 import strategies.maxproduction.MaxProductionArchon;
 import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
@@ -26,6 +27,9 @@ public strictfp class RobotPlayer {
                 break;
             case LUMBERJACK:
                 new JunglerLumberjack(rc).run();
+                break;
+            case SCOUT:
+                new MappingScout(rc).run();
                 break;
         }
     }
