@@ -12,9 +12,9 @@ public class MemoryBase {
     public final class Offsets {
         // eller nått
         public static final int COMMON = 0;
-        public static final int MAX_PRODCTION = 1000;
-        public static final int JUNGLER = 2000;
-        public static final int MAPPING = 3000;
+        public static final int MAX_PRODCTION = 100;
+        public static final int JUNGLER = 200;
+        public static final int MAPPING = 300;
 
         private Offsets() {}
     }

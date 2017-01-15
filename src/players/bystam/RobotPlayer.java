@@ -4,15 +4,19 @@ import battlecode.common.*;
 import common.robots.Gardener;
 import strategies.jungler.JunglerGardener;
 import strategies.jungler.JunglerLumberjack;
+import strategies.mapping.MappingGardener;
+import strategies.mapping.MappingMemory;
 import strategies.maxproduction.MaxProductionArchon;
 import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
 
-import java.util.Random;
-
 public strictfp class RobotPlayer {
 
+    private static MappingMemory mappingMemory;
+
     public static void run(RobotController rc) throws GameActionException {
+        mappingMemory = new MappingMemory(rc);
+
         switch (rc.getType()) {
             case ARCHON:
                 new MaxProductionArchon(rc).run();
@@ -26,7 +30,12 @@ public strictfp class RobotPlayer {
         }
     }
 
-    private static Gardener getGardener(RobotController rc) {
+    private static Gardener getGardener(RobotController rc) throws GameActionException {
+        if (!mappingMemory.hasMappingGardener()) {
+            mappingMemory.setHasMappingGardener(true);
+            return new MappingGardener(rc);
+        }
+
         int id = rc.getID() % 3;
         if (id == 1) {
             return new WateringGardener(rc);
