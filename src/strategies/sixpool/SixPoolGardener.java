@@ -22,7 +22,6 @@ public class SixPoolGardener extends Gardener {
 
     private static final int TREE_LIMIT = 5;
     private int treeBuildCount;
-    private boolean hasCreatedLumberjack;
 
     private MapLocation topLocation;
     private MapLocation bottomLocation;
@@ -80,10 +79,9 @@ public class SixPoolGardener extends Gardener {
 
     private void buildLumberjackIfAppropriate() throws GameActionException {
         Direction lumberjackDirection = Direction.getWest();
-        if (!hasCreatedLumberjack) {
+        if (commonMemory.getRobotCount(RobotType.LUMBERJACK) == 0) {
             if (canBuildRobot(RobotType.LUMBERJACK, lumberjackDirection)) {
                 buildRobot(RobotType.LUMBERJACK, lumberjackDirection);
-                hasCreatedLumberjack = true;
             }
         }
     }
