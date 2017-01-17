@@ -81,11 +81,11 @@ public class MapState {
         MapLocation myLocation = Tools.getMaxLocation(myLocations);
 
         if(Math.abs(enemyMaxLocation.x - myLocation.x) > 5){ //enemy is to the east or west, plant vertical
-            return enemyMaxLocation.x > myLocation.x ? Direction.EAST : Direction.WEST;
+            return enemyMaxLocation.x > myLocation.x ? Direction.getEast() : Direction.getWest();
         }
         else if(Math.abs(enemyMaxLocation.y - myLocation.y) > 5){ //enemy is above or below, plant horizontal
-            return enemyMaxLocation.y > myLocation.y ? Direction.NORTH : Direction.SOUTH;
+            return enemyMaxLocation.y > myLocation.y ? Direction.getNorth() : Direction.getSouth();
         }
-        return Direction.SOUTH; //dunno
+        return Direction.getSouth(); //dunno
     }
 }

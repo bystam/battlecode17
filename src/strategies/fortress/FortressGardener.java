@@ -22,7 +22,7 @@ public class FortressGardener extends Gardener{
         super(r);
         memory = new FortressSharedMemory(r);
         plantDirection = map.getPlantDirection();
-        lineIsHorizontal = plantDirection == Direction.SOUTH ||plantDirection == Direction.NORTH;
+        lineIsHorizontal = plantDirection == Direction.getSouth() ||plantDirection == Direction.getNorth();
 
         this.coord = this.getLocation().y - (yIndex * GARDEN_MARGIN);
     }
