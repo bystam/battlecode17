@@ -19,59 +19,108 @@ public class SixPoolGardener extends Gardener {
 
     private final int initialStepCount;
     private int stepsTakenFromBirth;
+
+    private static final int TREE_LIMIT = 5;
+    private int treeBuildCount;
     private boolean hasCreatedLumberjack;
 
-    private MapLocation startLocation;
+    private MapLocation topLocation;
+    private MapLocation bottomLocation;
     private Direction moveDirection;
 
     public SixPoolGardener(RobotController r) {
         super(r);
         mappingMemory = new MappingMemory(r);
         initialStepCount = 8 * serialNumberOfType + 5;
+
+        topLocation = getLocation();
+        bottomLocation = getLocation();
     }
 
     @Override
     public void step() throws GameActionException {
 
-        if (procudeScout()) return;
+        if (produceScout()) return;
         if (awaitGrid()) return;
         if (findInitialPosition()) return;
 
-        Direction plantDirection = Direction.getEast();
-        if (canPlantTree(plantDirection)) {
-            plantTree(plantDirection);
-            return;
-        }
+        if (plantTreeIfPossible()) return;
 
-        Direction soldierDirection = Direction.getWest();
-        if (map.getTeamBullets() > 300 && canBuildRobot(RobotType.SOLDIER, soldierDirection)) {
-            buildRobot(RobotType.SOLDIER, soldierDirection);
-        }
+        buildSoldierIfAppropriate();
+        buildLumberjackIfAppropriate();
 
-        TreeInfo nearbyTree = getTreeToTheRightOfMe();
-        float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
-        if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
-            water(nearbyTree.getID());
-            return;
-        }
+        if (water()) return;
 
         if (isBuildReady() && hasTreeBuildRequirements()) {
+            if (treeLimitIsReached()) {
+                moveDirection = moveDirection.opposite();
+            }
+
             if (canMove(moveDirection)) {
                 move(moveDirection);
             } else {
                 moveDirection = moveDirection.opposite();
             }
         }
+    }
 
+    private boolean treeLimitIsReached() {
+        MapLocation location = getLocation();
+        return treeBuildCount >= TREE_LIMIT && (location.y >= topLocation.y || location.y <= bottomLocation.y);
+    }
+
+    private void buildSoldierIfAppropriate() throws GameActionException {
+        Direction soldierDirection = Direction.getWest();
+        if (map.getTeamBullets() > 300 && canBuildRobot(RobotType.SOLDIER, soldierDirection)) {
+            buildRobot(RobotType.SOLDIER, soldierDirection);
+        }
+    }
+
+    private void buildLumberjackIfAppropriate() throws GameActionException {
+        Direction lumberjackDirection = Direction.getWest();
         if (!hasCreatedLumberjack) {
-            if (canBuildRobot(RobotType.LUMBERJACK, soldierDirection)) {
-                buildRobot(RobotType.LUMBERJACK, soldierDirection);
+            if (canBuildRobot(RobotType.LUMBERJACK, lumberjackDirection)) {
+                buildRobot(RobotType.LUMBERJACK, lumberjackDirection);
                 hasCreatedLumberjack = true;
             }
         }
     }
 
-    private boolean procudeScout() throws GameActionException {
+    private boolean water() throws GameActionException {
+        TreeInfo nearbyTree = getTreeToTheRightOfMe();
+        float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
+        if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
+            water(nearbyTree.getID());
+            return true;
+        }
+        return false;
+    }
+
+    private boolean plantTreeIfPossible() throws GameActionException {
+        if (treeLimitIsReached()) {
+            return false;
+        }
+
+        Direction plantDirection = Direction.getEast();
+        if (canPlantTree(plantDirection)) {
+            plantTree(plantDirection);
+
+            treeBuildCount++;
+
+            MapLocation location = getLocation();
+            if (location.y > topLocation.y) {
+                topLocation = location;
+            }
+            if (location.y < bottomLocation.y) {
+                bottomLocation = location;
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    private boolean produceScout() throws GameActionException {
         if (!mappingMemory.hasScout()) {
             boolean success = buildInAnyDirection(RobotType.SCOUT);
             if (success) {
@@ -96,7 +145,6 @@ public class SixPoolGardener extends Gardener {
             }
 
             if (stepsTakenFromBirth == initialStepCount) {
-                startLocation = getLocation();
                 moveDirection = Direction.getNorth();
             }
             return true;
