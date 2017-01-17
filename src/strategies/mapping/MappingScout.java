@@ -68,6 +68,7 @@ public class MappingScout extends Scout {
         if (canMove(nextLocation)) {
             move(nextLocation);
         } else {
+            moveInAnyDirection();
             // randomly step a bit away from nextLocation to try and avoid being stuck
         }
 

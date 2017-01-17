@@ -279,7 +279,7 @@ public abstract class RobotBase implements Robot {
 
                 Clock.yield();
             } catch (Exception e) {
-                System.out.println("Archon Exception");
+                System.out.println(getType() + " Exception");
                 e.printStackTrace();
             }
         }
