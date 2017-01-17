@@ -2,6 +2,7 @@ package strategies.fortress;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
+import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import common.robots.Gardener;
 
@@ -10,19 +11,21 @@ import common.robots.Gardener;
  */
 public class FortressGardener extends Gardener{
 
-    private int index;
+    private float y;
+    private float GARDEN_MARGIN = 10f;
 
     public FortressGardener(RobotController r, int yIndex) {
         super(r);
-        this.index = yIndex;
+        this.y = (3-yIndex) * GARDEN_MARGIN;
     }
 
     @Override
     public void step() throws GameActionException {
-        if(!plantTreeInAnyDirection()){
-            moveInAnyDirection();
-            plantTreeInAnyDirection();
+        if(Math.abs(getLocation().y - y) > 0.05f){
+            move(new MapLocation(getLocation().x, y));
+            return;
         }
+
     }
 
     private boolean plantTreeInAnyDirection() throws GameActionException{

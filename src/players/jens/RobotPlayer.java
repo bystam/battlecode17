@@ -3,6 +3,7 @@ package players.jens;
 import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
 import common.robots.Gardener;
+import common.wrappers.Tools;
 import strategies.fortress.FortressArchon;
 import strategies.fortress.FortressGardener;
 import strategies.fortress.FortressSharedMemory;
@@ -13,9 +14,10 @@ import strategies.fortress.FortressSharedMemory;
 public class RobotPlayer {
 
     public static void run(RobotController rc) throws GameActionException {
+        Tools tools = new Tools(rc);
         switch (rc.getType()) {
             case ARCHON:
-                new FortressArchon(rc).run();
+                new FortressArchon(rc, tools.getArchonCornerDirection()).run();
                 break;
             case GARDENER:
                 getGardener(rc).run();
@@ -24,11 +26,7 @@ public class RobotPlayer {
     }
 
     private static Gardener getGardener(RobotController rc){
-        return new FortressGardener(rc, getRobotIndex(rc));
-    }
-
-    private static int getRobotIndex(RobotController rc){
         FortressSharedMemory memory = new FortressSharedMemory(rc);
-        return memory.getAndIncrementCurrentIndex();
+        return new FortressGardener(rc, memory.getAndSetGardenerIndex());
     }
 }

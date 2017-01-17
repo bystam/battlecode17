@@ -66,4 +66,37 @@ public class Tools {
     public Direction randomDirection() {
         return new Direction((float)Math.random() * 2 * (float)Math.PI);
     }
+
+    public Direction getArchonCornerDirection(){
+        MapLocation[] enemyLocations = rc.getInitialArchonLocations(rc.getTeam().opponent());
+        MapLocation[] myLocations = rc.getInitialArchonLocations(rc.getTeam());
+
+        MapLocation enemyMax = getMaxLocation(enemyLocations);
+        MapLocation myMax = getMaxLocation(myLocations);
+
+        Direction horizontal = enemyMax.x > myMax.x ? Direction.getWest() : Direction.getEast();
+        Direction vertical = enemyMax.y > myMax.y ? Direction.getNorth() : Direction.getSouth();
+
+        float halfDiff = horizontal.degreesBetween(vertical) / 2;
+        float smallest = Math.abs(vertical.radians) > Math.abs(horizontal.radians) ? Math.abs(horizontal.radians) : Math.abs(vertical.radians);
+
+        return new Direction(smallest + halfDiff);
+    }
+
+
+    private static MapLocation getMaxLocation(MapLocation[] locations){
+        float maxX = Integer.MIN_VALUE;
+        float maxY = Integer.MIN_VALUE;
+
+        for(MapLocation location : locations){
+            if(location.x > maxX){
+                maxX = location.x;
+            }
+            if(location.y > maxY){
+                maxY = location.y;
+            }
+        }
+
+        return new MapLocation(maxX, maxY);
+    }
 }

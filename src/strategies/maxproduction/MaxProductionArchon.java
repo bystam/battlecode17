@@ -31,15 +31,4 @@ public class MaxProductionArchon extends Archon {
             moveInAnyDirection();
         }
     }
-
-    private boolean hireInAnyDirection() throws GameActionException{
-        boolean hasHired = false;
-        for(Direction d : tools.getDirections()){
-            if(this.canHireGardener(d)){
-                this.hireGardener(d);
-                break;
-            }
-        }
-        return hasHired;
-    }
 }
