@@ -42,7 +42,9 @@ public class SixPoolGardener extends Gardener {
 
         if (produceScout()) return;
         if (awaitGrid()) return;
-        if (findInitialPosition()) return;
+        if (findInitialPosition()) {
+            return;
+        }
 
         if (plantTreeIfPossible()) return;
 
@@ -88,10 +90,13 @@ public class SixPoolGardener extends Gardener {
 
     private boolean water() throws GameActionException {
         TreeInfo nearbyTree = getTreeToTheRightOfMe();
-        float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
-        if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
-            water(nearbyTree.getID());
-            return true;
+
+        if (nearbyTree != null) {
+            float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
+            if (missingHealth > 10 && canWater(nearbyTree.getID())) {
+                water(nearbyTree.getID());
+                return true;
+            }
         }
         return false;
     }

@@ -25,4 +25,9 @@ public class MapGrid {
     public MapLocation getCenter() {
         return new MapLocation(origin.x + width/2, origin.y + height/2);
     }
+
+    @Override
+    public String toString() {
+        return String.format("x: %d, y: %d, width: %d, height: %d", origin.x, origin.y, width, height);
+    }
 }

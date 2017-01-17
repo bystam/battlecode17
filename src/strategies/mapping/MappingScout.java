@@ -5,7 +5,6 @@ import common.model.MapGrid;
 import common.robots.Scout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

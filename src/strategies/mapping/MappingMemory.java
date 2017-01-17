@@ -41,17 +41,17 @@ public class MappingMemory extends MemoryBase {
     }
 
     public void setGrid(MapGrid grid) throws GameActionException {
-        rc.broadcast(GRID_ORIGIN_X, grid.origin.x);
-        rc.broadcast(GRID_ORIGIN_Y, grid.origin.y);
-        rc.broadcast(GRID_WIDTH, grid.width);
-        rc.broadcast(GRID_HEIGHT, grid.height);
+        setInt(GRID_ORIGIN_X, grid.origin.x);
+        setInt(GRID_ORIGIN_Y, grid.origin.y);
+        setInt(GRID_WIDTH, grid.width);
+        setInt(GRID_HEIGHT, grid.height);
     }
 
     public MapGrid getGrid() throws GameActionException {
-        int x = rc.readBroadcast(GRID_ORIGIN_X);
-        int y = rc.readBroadcast(GRID_ORIGIN_Y);
-        int width = rc.readBroadcast(GRID_WIDTH);
-        int height = rc.readBroadcast(GRID_HEIGHT);
+        int x = getInt(GRID_ORIGIN_X);
+        int y = getInt(GRID_ORIGIN_Y);
+        int width = getInt(GRID_WIDTH);
+        int height = getInt(GRID_HEIGHT);
 
         if (width < 3 || height < 3) { // there probably is no grid
             return null;
