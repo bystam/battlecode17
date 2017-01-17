@@ -48,6 +48,7 @@ public class MappingScout extends Scout {
             MapLocation bottomRightCorner = getLocation();
             grid = new MapGrid(bottomLeftCorner, bottomRightCorner);
             locationsToCover = getLocationsEnoughToCoverGrid(grid);
+            memory.setGrid(grid);
         }
     }
 
@@ -60,9 +61,6 @@ public class MappingScout extends Scout {
     }
 
     private void flyAcrossMapRegisteringTrees() throws GameActionException {
-
-        TreeInfo[] trees = senseNearbyTrees();
-        grid.registerTrees(trees);
 
         MapLocation nextLocation = locationsToCover.get(0);
         if (canMove(nextLocation)) {

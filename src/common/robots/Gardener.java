@@ -25,11 +25,9 @@ public abstract class Gardener extends RobotBase {
         return rc.canWater(i);
     }
 
-
     public void water(MapLocation mapLocation) throws GameActionException {
         rc.water(mapLocation);
     }
-
 
     public void water(int i) throws GameActionException {
         rc.water(i);
@@ -69,9 +67,9 @@ public abstract class Gardener extends RobotBase {
     }
 
     private RobotInfo getArchonCreator() {
-        return Arrays.stream(senseNearbyRobots())
+        return Arrays.stream(senseNearbyRobots(-1, getTeam()))
                 .filter( (r) -> {
-                    return r.getType() == RobotType.ARCHON && r.getTeam() == getTeam();
+                    return r.getType() == RobotType.ARCHON;
                 })
                 .sorted( (a1, a2) -> {
                     return Float.compare(a1.getLocation().distanceTo(getLocation()),

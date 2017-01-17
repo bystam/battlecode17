@@ -48,7 +48,15 @@ public class MappingMemory extends MemoryBase {
     }
 
     public MapGrid getGrid() throws GameActionException {
-        return new MapGrid(rc.readBroadcast(GRID_ORIGIN_X), rc.readBroadcast(GRID_ORIGIN_Y),
-                           rc.readBroadcast(GRID_WIDTH), rc.readBroadcast(GRID_HEIGHT));
+        int x = rc.readBroadcast(GRID_ORIGIN_X);
+        int y = rc.readBroadcast(GRID_ORIGIN_Y);
+        int width = rc.readBroadcast(GRID_WIDTH);
+        int height = rc.readBroadcast(GRID_HEIGHT);
+
+        if (width < 3 || height < 3) { // there probably is no grid
+            return null;
+        }
+
+        return new MapGrid(x, y, width, height);
     }
 }

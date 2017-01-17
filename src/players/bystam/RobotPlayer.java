@@ -2,6 +2,7 @@ package players.bystam;
 
 import battlecode.common.*;
 import common.robots.Gardener;
+import strategies.coward.LimitedArchon;
 import strategies.jungler.JunglerGardener;
 import strategies.jungler.JunglerLumberjack;
 import strategies.mapping.MappingGardener;
@@ -21,7 +22,7 @@ public strictfp class RobotPlayer {
 
         switch (rc.getType()) {
             case ARCHON:
-                new MaxProductionArchon(rc).run();
+                new LimitedArchon(rc, 1).run();
                 break;
             case GARDENER:
                 new SixPoolGardener(rc).run();

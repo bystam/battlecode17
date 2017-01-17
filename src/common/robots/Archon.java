@@ -32,15 +32,14 @@ public abstract class Archon extends RobotBase{
         rc.hireGardener(direction);
     }
 
-    protected boolean hireInAnyDirection() throws GameActionException{
-        boolean hasHired = false;
+    protected boolean hireInAnyDirection() throws GameActionException {
         for(Direction d : tools.getDirections()){
-            if(this.canHireGardener(d)){
-                this.hireGardener(d);
-                break;
+            if(canHireGardener(d)){
+                hireGardener(d);
+                return true;
             }
         }
-        return hasHired;
+        return false;
     }
 
 
