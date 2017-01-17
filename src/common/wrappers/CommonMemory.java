@@ -19,7 +19,7 @@ public class CommonMemory extends MemoryBase {
     }
 
     public int incrementAndGetRobotBuildCount(RobotType type) throws GameActionException {
-        int count = getRobotBuildCount(type);
+        int count = getInt(getIndexForType(type));
         setInt(getIndexForType(type), count + 1);
         return count;
     }

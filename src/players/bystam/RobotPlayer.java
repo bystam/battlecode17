@@ -23,7 +23,7 @@ public strictfp class RobotPlayer {
 
         switch (rc.getType()) {
             case ARCHON:
-                new LimitedArchon(rc, 1).run();
+                new LimitedArchon(rc, 2).run();
                 break;
             case GARDENER:
                 new SixPoolGardener(rc).run();

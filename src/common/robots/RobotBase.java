@@ -26,7 +26,7 @@ public abstract class RobotBase implements Robot {
 
         int serial = -1;
         try {
-            serial = commonMemory.getRobotBuildCount(getType());
+            serial = commonMemory.incrementAndGetRobotBuildCount(getType());
         } catch (GameActionException e) {
             e.printStackTrace();
         }

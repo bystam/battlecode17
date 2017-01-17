@@ -17,7 +17,7 @@ public class SixPoolGardener extends Gardener {
     private MapGrid grid;
 
 
-    private static final int STEP_AWAY_COUNT = 5;
+    private final int initialStepCount;
     private int stepsTakenFromBirth;
     private boolean hasCreatedLumberjack;
 
@@ -27,6 +27,7 @@ public class SixPoolGardener extends Gardener {
     public SixPoolGardener(RobotController r) {
         super(r);
         mappingMemory = new MappingMemory(r);
+        initialStepCount = 3 * serialNumberOfType + 3;
     }
 
     @Override
@@ -90,12 +91,12 @@ public class SixPoolGardener extends Gardener {
     }
 
     private boolean findInitialPosition() throws GameActionException {
-        if (stepsTakenFromBirth < STEP_AWAY_COUNT) {
-            if (canMove(grid.getCenter())) {
-                move(grid.getCenter());
+        if (stepsTakenFromBirth < initialStepCount) {
+            if (pathFindingAlgorithmMoveTowards(grid.getCenter())) {
                 ++stepsTakenFromBirth;
             }
-            if (stepsTakenFromBirth == STEP_AWAY_COUNT) {
+
+            if (stepsTakenFromBirth == initialStepCount) {
                 startLocation = getLocation();
                 moveDirection = Direction.getNorth();
             }
