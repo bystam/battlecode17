@@ -14,12 +14,12 @@ import java.util.Optional;
 public class SixPoolGardener extends Gardener {
 
     private final MappingMemory mappingMemory;
+    private MapGrid grid;
+
 
     private static final int STEP_AWAY_COUNT = 5;
     private int stepsTakenFromBirth;
     private boolean hasCreatedLumberjack;
-
-    private MapGrid grid;
 
     private MapLocation startLocation;
     private Direction moveDirection;

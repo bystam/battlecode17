@@ -354,4 +354,25 @@ public abstract class RobotBase implements Robot {
         return false;
     }
 
+
+    public boolean pathFindingAlgorithmMoveTowards(MapLocation location) throws GameActionException {
+        if (canMove(location)) {
+            move(location);
+            return true;
+        }
+
+        Direction alternatePathDirection = getLocation().directionTo(location).rotateLeftDegrees(90);
+        if (canMove(alternatePathDirection)) {
+            move(alternatePathDirection);
+            return true;
+        }
+
+        alternatePathDirection = getLocation().directionTo(location).rotateRightDegrees(90);
+        if (canMove(alternatePathDirection)) {
+            move(alternatePathDirection);
+            return true;
+        }
+
+        return false;
+    }
 }
