@@ -293,10 +293,19 @@ public abstract class RobotBase implements Robot {
                 if (color != null) {
                     tools.setIndicatorDot(getLocation(), color[0], color[1], color[2]);
                 }
+
+                if(serialNumberOfType == 0 && getType() == RobotType.ARCHON){
+                    commonMemory.wipeAndSaveHeartbeats();
+                    commonMemory.incrementHeartbeat(getType());
+                }
+                commonMemory.incrementHeartbeat(getType());
                 step();
 
                 Clock.yield();
-            } catch (Exception e) {
+            } catch(SuicideException e){
+                return;
+            }
+            catch (Exception e) {
                 System.out.println(getType() + " Exception");
                 e.printStackTrace();
             }

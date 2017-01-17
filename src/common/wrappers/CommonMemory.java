@@ -35,4 +35,32 @@ public class CommonMemory extends MemoryBase {
         }
         return -1;
     }
+
+    private int getHeartbeatIndexForType(RobotType type) {
+        switch (type) {
+            case ARCHON: return 6;
+            case GARDENER: return 8;
+            case LUMBERJACK: return 10;
+            case SOLDIER: return 12;
+            case TANK: return 14;
+            case SCOUT: return 16;
+        }
+        return -1;
+    }
+
+    public int getRobotCount(RobotType type) throws GameActionException {
+        return getInt(getHeartbeatIndexForType(type) + 1);
+    }
+
+    public void wipeAndSaveHeartbeats() throws GameActionException {
+        for(RobotType type : RobotType.values()){
+            setInt(getHeartbeatIndexForType(type)+1, getInt(getHeartbeatIndexForType(type)));
+            setInt(getHeartbeatIndexForType(type), 0);
+        }
+    }
+
+    public void incrementHeartbeat(RobotType type) throws GameActionException {
+        int i = getHeartbeatIndexForType(type);
+        setInt(i, getInt(i)+1);
+    }
 }

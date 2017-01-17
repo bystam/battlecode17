@@ -12,46 +12,55 @@ public class FortressGardener extends Gardener{
     private float y;
     private float GARDEN_MARGIN = 10f;
     private boolean startedPlanting = false;
-    private boolean hasBuiltMurderer = false;
+    private int lineLength = 0;
+    private boolean horizontal = false;
 
     public FortressGardener(RobotController r, int yIndex) {
         super(r);
         memory = new FortressSharedMemory(r);
+        horizontal = map.shouldPlantHorizontal();
         this.y = this.getLocation().y - ((3-yIndex) * GARDEN_MARGIN);
-        System.out.println("Y coord for this gardener is " + this.y);
     }
 
     @Override
     public void step() throws GameActionException {
-        if(!startedPlanting && Math.abs(getLocation().y - y) > 0.05f){
-            MapLocation loco = new MapLocation(getLocation().x, y);
-            if(canMove(loco)){
-                move(loco);
-                return;
-            }
-        }
-        if(!startedPlanting && canMove(Direction.getWest())){
-            move(Direction.getWest());
+        // go to your starting position
+        if(goToStartingPosition()){
             return;
         }
         startedPlanting = true;
 
+
         //now at westmost point. start planting trees until some x
-        if(canPlantTree(Direction.getSouth())){
+        if(canPlantTree(Direction.getSouth()) && lineLength < 8){
             plantTree(Direction.getSouth());
+            lineLength++;
             return;
         }
 
+        TreeInfo[] nearbyTrees = senseNearbyTrees(getLocation(), -1, getTeam());
+        if(nearbyTrees != null && nearbyTrees.length > 0){
+            TreeInfo nearbyTree = nearbyTrees[0];
+            float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
+            if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
+                water(nearbyTree.getID());
+                return;
+            }
+        }
+
         boolean canMoveAlongLine = canMove(Direction.getEast());
-        TreeInfo[] nearbyTrees = senseNearbyTrees();
         boolean treesBlockingLine = nearbyTrees != null && nearbyTrees.length > 0;
 
-        if(isBuildReady() && hasTreeBuildRequirements() && canMoveAlongLine){
+        if(isBuildReady() && hasTreeBuildRequirements() && canMoveAlongLine && lineLength < 8){
             move(Direction.getEast());
+        }
+        if(lineLength > 8 && canMove(Direction.getWest())){
+            move(Direction.getWest());
+            return;
         }
         //System.out.println("canmovealong: " + canMoveAlongLine + ", treesblocking: " + treesBlockingLine);
         if(!canMoveAlongLine && treesBlockingLine){
-            if(memory.getLumberjackCount() < 1) {
+            if(commonMemory.getRobotCount(RobotType.LUMBERJACK) < 1) {
                 deployMurderer();
             } else{
                 //System.out.println("calling murderer");
@@ -60,23 +69,30 @@ public class FortressGardener extends Gardener{
         }
     }
 
-    private void deployMurderer() throws GameActionException {
-        if(buildInAnyDirection(RobotType.LUMBERJACK)){
-            hasBuiltMurderer = true;
-            memory.getAndSetLumberjackIndex();
+    private boolean goToStartingPosition() throws GameActionException {
+        if(startedPlanting){
+            return false;
         }
-    }
-
-    private boolean plantTreeInAnyDirection() throws GameActionException{
-        boolean hasPlanted = false;
-        for(Direction d : tools.getDirections()){
-
-            if(this.canPlantTree(d)){
-                hasPlanted = true;
-                this.plantTree(d);
-                break;
+        if(Math.abs(getLocation().y - y) > 0.05f){
+            MapLocation loco = new MapLocation(getLocation().x, y);
+            if(canMove(loco)){
+                move(loco);
+                return true;
             }
         }
-        return hasPlanted;
+        if(canMove(Direction.getWest())){
+            move(Direction.getWest());
+            return true;
+        }
+        if(memory.getLumberjackCount() < 1) {
+            deployMurderer();
+        }
+        return false;
+    }
+
+    private void deployMurderer() throws GameActionException {
+        if(buildInAnyDirection(RobotType.LUMBERJACK)){
+            memory.getAndSetLumberjackIndex();
+        }
     }
 }

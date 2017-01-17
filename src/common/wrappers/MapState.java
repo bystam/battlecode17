@@ -75,4 +75,9 @@ public class MapState {
     public boolean isCircleOccupied(MapLocation mapLocation, float v) throws GameActionException {
         return rc.isCircleOccupied(mapLocation, v);
     }
+
+    public boolean shouldPlantHorizontal() {
+        MapLocation[] enemyLocations = getInitialArchonLocations(getTeam().opponent());
+        return true;
+    }
 }

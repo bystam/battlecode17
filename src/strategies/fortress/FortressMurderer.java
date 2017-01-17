@@ -2,9 +2,9 @@ package strategies.fortress;
 
 import battlecode.common.*;
 import common.robots.Lumberjack;
+import common.robots.SuicideException;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * Created by jens on 2017-01-17.
@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 public class FortressMurderer extends Lumberjack {
 
     private final FortressSharedMemory memory;
-    private static final float CLOSE = 15.0f;
+    private static final float CLOSE = 20.0f;
+    MapLocation job;
 
     public FortressMurderer(RobotController r) {
         super(r);
@@ -21,10 +22,17 @@ public class FortressMurderer extends Lumberjack {
 
     @Override
     public void step() throws GameActionException {
-        TreeInfo[] nearbyTrees = Arrays.asList(senseNearbyTrees(-1, Team.NEUTRAL)).stream().filter(tree-> tree.getLocation().distanceSquaredTo(this.getLocation()) < CLOSE).toArray(TreeInfo[]::new);
+        if(map.getRoundNum() % 50 == 0){
+            throw new SuicideException();
+        }
+        if(job != null && job.distanceTo(getLocation()) > CLOSE){
+            System.out.println("moving towards job " + job);
+            pathFindingAlgorithmMoveTowards(job);
+            return;
+        }
+        TreeInfo[] nearbyTrees = Arrays.asList(senseNearbyTrees(-1, Team.NEUTRAL)).stream().filter(tree-> tree.getLocation().distanceTo(this.getLocation()) < CLOSE).toArray(TreeInfo[]::new);
 
         if(nearbyTrees != null && nearbyTrees.length > 0){
-            System.out.println("nearbytrees");
             if(murderTrees(nearbyTrees)) {
                 return;
             }
@@ -33,12 +41,12 @@ public class FortressMurderer extends Lumberjack {
             return;
         }
 
-        MapLocation job = memory.popMurdererJob();
+        job = memory.popMurdererJob();
         if(job == null){
             return;
         }
-        System.out.println("hasajob: " + job);
         pathFindingAlgorithmMoveTowards(job);
+
     }
 
     private boolean murderTrees(TreeInfo[] nearbyTrees) throws GameActionException {

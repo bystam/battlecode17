@@ -46,6 +46,9 @@ public class FortressSharedMemory extends MemoryBase {
     }
 
     public MapLocation popMurdererJob() throws GameActionException {
+        if(getCurrentMurdererJob() == null){
+            return null;
+        }
         MapLocation loc = this.getLocation(MURDERER_JOB_INDEX);
         this.setLocation(null, MURDERER_JOB_INDEX);
         return loc;
