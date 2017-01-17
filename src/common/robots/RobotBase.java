@@ -308,7 +308,6 @@ public abstract class RobotBase implements Robot {
 
         boolean didMoveToEdge = binarySearchMoveTowards(horizontally);
         if (didMoveToEdge) {
-            System.out.println("I moved horizontally after a binary search!");
             return false;
         }
 

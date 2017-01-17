@@ -17,15 +17,19 @@ public class FortressGardener extends Gardener{
     public FortressGardener(RobotController r, int yIndex) {
         super(r);
         this.y = (3-yIndex) * GARDEN_MARGIN;
+        System.out.println("Y coord for this gardener is " + this.y);
     }
 
     @Override
     public void step() throws GameActionException {
         if(Math.abs(getLocation().y - y) > 0.05f){
-            move(new MapLocation(getLocation().x, y));
-            return;
+            MapLocation loco = new MapLocation(getLocation().x, y);
+            if(canMove(loco)){
+                move(loco);
+                return;
+            }
         }
-
+        plantTreeInAnyDirection();
     }
 
     private boolean plantTreeInAnyDirection() throws GameActionException{

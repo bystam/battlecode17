@@ -14,6 +14,7 @@ public class FortressArchon extends Archon{
     public FortressArchon(RobotController r, Direction corner) {
         super(r);
         memory = new FortressSharedMemory(r);
+        this.corner = corner;
 
     }
 
@@ -21,7 +22,7 @@ public class FortressArchon extends Archon{
     @Override
     public void step() throws GameActionException {
 
-        if(moveTowardsCorner(corner)){
+        if(!moveTowardsCorner(corner)){
             return;
         }
 

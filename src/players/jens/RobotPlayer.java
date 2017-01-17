@@ -25,7 +25,7 @@ public class RobotPlayer {
         }
     }
 
-    private static Gardener getGardener(RobotController rc){
+    private static Gardener getGardener(RobotController rc) throws GameActionException{
         FortressSharedMemory memory = new FortressSharedMemory(rc);
         return new FortressGardener(rc, memory.getAndSetGardenerIndex());
     }
