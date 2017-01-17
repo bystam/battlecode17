@@ -36,10 +36,16 @@ public class MemoryBase {
         int both = rc.readBroadcast(i);
         int x = both & 0xFFFF;
         int y = (both >> 16) & 0xFFFF;
+        if(x == -1 && y == -1){
+            return null;
+        }
         return new MapLocation(x, y);
     }
 
     protected void setLocation(MapLocation location, int i) throws GameActionException {
+        if(location == null){
+            location = new MapLocation(-1,-1);
+        }
         i += offset;
 
         int x = (int)location.x;

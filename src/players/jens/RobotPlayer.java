@@ -6,6 +6,7 @@ import common.robots.Gardener;
 import common.wrappers.Tools;
 import strategies.fortress.FortressArchon;
 import strategies.fortress.FortressGardener;
+import strategies.fortress.FortressMurderer;
 import strategies.fortress.FortressSharedMemory;
 
 /**
@@ -22,6 +23,8 @@ public class RobotPlayer {
             case GARDENER:
                 getGardener(rc).run();
                 break;
+            case LUMBERJACK:
+                new FortressMurderer(rc).run();
         }
     }
 

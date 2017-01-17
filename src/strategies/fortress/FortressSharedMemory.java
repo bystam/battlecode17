@@ -1,6 +1,7 @@
 package strategies.fortress;
 
 import battlecode.common.GameActionException;
+import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import common.wrappers.MemoryBase;
 
@@ -11,6 +12,7 @@ public class FortressSharedMemory extends MemoryBase {
 
     private static final int GARDENER_COUNT_INDEX = 0;
     private static final int LUMBERJACK_COUNT_INDEX = 1;
+    private static final int MURDERER_JOB_INDEX = 2;
 
 
     public FortressSharedMemory(RobotController rc) {
@@ -42,4 +44,28 @@ public class FortressSharedMemory extends MemoryBase {
     public int getGardenerCount() throws GameActionException{
         return this.getInt(GARDENER_COUNT_INDEX);
     }
+
+    public MapLocation popMurdererJob() throws GameActionException {
+        MapLocation loc = this.getLocation(MURDERER_JOB_INDEX);
+        this.setLocation(null, MURDERER_JOB_INDEX);
+        return loc;
+    }
+
+    public MapLocation getCurrentMurdererJob() throws GameActionException {
+        int current = this.getInt(MURDERER_JOB_INDEX);
+        if(current == 0 || current == -1){
+            return null;
+        }
+        return getLocation(MURDERER_JOB_INDEX);
+    }
+
+    public boolean callMurderer(MapLocation location) throws GameActionException {
+        MapLocation current = getCurrentMurdererJob();
+        if(current == null){
+            setLocation(location, MURDERER_JOB_INDEX);
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -1,9 +1,6 @@
 package strategies.fortress;
 
-import battlecode.common.Direction;
-import battlecode.common.GameActionException;
-import battlecode.common.MapLocation;
-import battlecode.common.RobotController;
+import battlecode.common.*;
 import common.robots.Gardener;
 
 /**
@@ -11,12 +8,15 @@ import common.robots.Gardener;
  */
 public class FortressGardener extends Gardener{
 
+    private final FortressSharedMemory memory;
     private float y;
     private float GARDEN_MARGIN = 10f;
     private boolean startedPlanting = false;
+    private boolean hasBuiltMurderer = false;
 
     public FortressGardener(RobotController r, int yIndex) {
         super(r);
+        memory = new FortressSharedMemory(r);
         this.y = this.getLocation().y - ((3-yIndex) * GARDEN_MARGIN);
         System.out.println("Y coord for this gardener is " + this.y);
     }
@@ -42,10 +42,29 @@ public class FortressGardener extends Gardener{
             return;
         }
 
-        if(hasTreeBuildRequirements() && canMove(Direction.getEast())){
+        boolean canMoveAlongLine = canMove(Direction.getEast());
+        TreeInfo[] nearbyTrees = senseNearbyTrees();
+        boolean treesBlockingLine = nearbyTrees != null && nearbyTrees.length > 0;
+
+        if(isBuildReady() && hasTreeBuildRequirements() && canMoveAlongLine){
             move(Direction.getEast());
         }
+        //System.out.println("canmovealong: " + canMoveAlongLine + ", treesblocking: " + treesBlockingLine);
+        if(!canMoveAlongLine && treesBlockingLine){
+            if(memory.getLumberjackCount() < 1) {
+                deployMurderer();
+            } else{
+                //System.out.println("calling murderer");
+                memory.callMurderer(getLocation());
+            }
+        }
+    }
 
+    private void deployMurderer() throws GameActionException {
+        if(buildInAnyDirection(RobotType.LUMBERJACK)){
+            hasBuiltMurderer = true;
+            memory.getAndSetLumberjackIndex();
+        }
     }
 
     private boolean plantTreeInAnyDirection() throws GameActionException{

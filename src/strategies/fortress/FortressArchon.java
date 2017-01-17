@@ -27,7 +27,7 @@ public class FortressArchon extends Archon{
         }
 
         //we're at the corner now, start by building 3 gardeners
-        if(memory.getGardenerCount() < 3){
+        if(memory.getGardenerCount() < 1){
             hireInAnyDirection();
         }
     }
