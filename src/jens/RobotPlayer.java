@@ -1,4 +1,4 @@
-package players.jens;
+package jens;
 
 import battlecode.common.GameActionException;
 import battlecode.common.RobotController;

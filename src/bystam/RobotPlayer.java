@@ -1,15 +1,13 @@
-package players.bystam;
+package bystam;
 
 import battlecode.common.*;
 import common.robots.Gardener;
 import strategies.coward.LimitedArchon;
 import strategies.fortress.FortressMurderer;
 import strategies.jungler.JunglerGardener;
-import strategies.jungler.JunglerLumberjack;
 import strategies.mapping.MappingGardener;
 import strategies.mapping.MappingMemory;
 import strategies.mapping.MappingScout;
-import strategies.maxproduction.MaxProductionArchon;
 import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
 import strategies.sixpool.SixPoolGardener;
