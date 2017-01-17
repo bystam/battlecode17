@@ -1,6 +1,7 @@
 package common.robots;
 
 import battlecode.common.*;
+import common.wrappers.CommonMemory;
 import common.wrappers.MapState;
 import common.Robot;
 import common.wrappers.Tools;
@@ -10,14 +11,27 @@ import common.wrappers.Tools;
  */
 public abstract class RobotBase implements Robot {
 
-    protected RobotController rc;
-    protected MapState map;
-    protected Tools tools;
+    protected final RobotController rc;
+    protected final MapState map;
+    protected final Tools tools;
+    protected final CommonMemory commonMemory;
 
-    public RobotBase(RobotController r){
+    protected final int serialNumberOfType;
+
+    public RobotBase(RobotController r) {
         rc = r;
         map = new MapState(rc);
         tools = new Tools(rc);
+        commonMemory = new CommonMemory(rc);
+
+        int serial = -1;
+        try {
+            serial = commonMemory.getRobotBuildCount(getType());
+        } catch (GameActionException e) {
+            e.printStackTrace();
+        }
+
+        serialNumberOfType = serial;
     }
 
     public int getID() {

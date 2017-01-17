@@ -3,6 +3,7 @@ package common.wrappers;
 import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
+import battlecode.common.RobotType;
 
 /**
  * Created by fredrikbystam on 15/01/17.
