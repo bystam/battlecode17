@@ -11,7 +11,7 @@ import battlecode.common.RobotType;
 public class MemoryBase {
 
     public final class Offsets {
-        // eller nått
+
         public static final int COMMON = 0;
         public static final int MAPPING = 300;
         public static final int FORTRESS = 400;
