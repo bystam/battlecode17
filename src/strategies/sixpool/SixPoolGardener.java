@@ -27,7 +27,7 @@ public class SixPoolGardener extends Gardener {
     public SixPoolGardener(RobotController r) {
         super(r);
         mappingMemory = new MappingMemory(r);
-        initialStepCount = 3 * serialNumberOfType + 3;
+        initialStepCount = 8 * serialNumberOfType + 5;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class SixPoolGardener extends Gardener {
         }
 
         if (!hasCreatedLumberjack) {
-            boolean success = buildInAnyDirection(RobotType.LUMBERJACK);
-            if (success) {
+            if (canBuildRobot(RobotType.LUMBERJACK, soldierDirection)) {
+                buildRobot(RobotType.LUMBERJACK, soldierDirection);
                 hasCreatedLumberjack = true;
             }
         }
