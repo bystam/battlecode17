@@ -98,6 +98,7 @@ public class SixPoolGardener extends Gardener {
                 return true;
             }
         }
+
         return false;
     }
 

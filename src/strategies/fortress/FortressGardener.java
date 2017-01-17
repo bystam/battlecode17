@@ -85,8 +85,10 @@ public class FortressGardener extends Gardener{
         if(startedPlanting){
             return false;
         }
-        if(Math.abs(getLocation().y - coord) > 0.05f){
-            MapLocation loco = new MapLocation(getLocation().x, coord);
+        float locationCoord = lineIsHorizontal ? getLocation().y : getLocation().x;
+        float moveToCoord = lineIsHorizontal ? getLocation().x : getLocation().y;
+        if(Math.abs(locationCoord - coord) > 0.05f){
+            MapLocation loco = new MapLocation(moveToCoord, coord);
             if(canMove(loco)){
                 move(loco);
                 return true;

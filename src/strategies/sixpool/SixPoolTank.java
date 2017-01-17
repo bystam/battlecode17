@@ -1,24 +1,22 @@
 package strategies.sixpool;
 
-import battlecode.common.*;
+import battlecode.common.BodyInfo;
+import battlecode.common.GameActionException;
+import battlecode.common.RobotController;
 import common.model.MapGrid;
-import common.robots.Soldier;
+import common.robots.Tank;
 import strategies.mapping.MappingMemory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
- * Created by fredrikbystam on 17/01/17.
+ * Created by jens on 2017-01-17.
  */
-public class SixPoolSoldier extends Soldier {
+public class SixPoolTank extends Tank {
 
     private final MappingMemory mappingMemory;
     private MapGrid grid;
 
 
-    public SixPoolSoldier(RobotController r) {
+    public SixPoolTank(RobotController r) {
         super(r);
         mappingMemory = new MappingMemory(r);
     }
@@ -36,8 +34,8 @@ public class SixPoolSoldier extends Soldier {
     private boolean fireAtAnyOf(BodyInfo[] targets) throws GameActionException {
         if (targets.length > 0) {
             BodyInfo target = targets[0];
-            if (canFireSingleShot()) {
-                fireSingleShot(getLocation().directionTo(target.getLocation()));
+            if (canFireTriadShot()) {
+                fireTriadShot(getLocation().directionTo(target.getLocation()));
                 return true;
             }
         }
@@ -50,5 +48,4 @@ public class SixPoolSoldier extends Soldier {
         }
         return false;
     }
-
 }

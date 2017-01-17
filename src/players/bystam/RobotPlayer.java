@@ -14,6 +14,7 @@ import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
 import strategies.sixpool.SixPoolGardener;
 import strategies.sixpool.SixPoolSoldier;
+import strategies.sixpool.SixPoolTank;
 
 public strictfp class RobotPlayer {
 
@@ -37,6 +38,9 @@ public strictfp class RobotPlayer {
                 break;
             case SOLDIER:
                 new SixPoolSoldier(rc).run();
+                break;
+            case TANK:
+                new SixPoolTank(rc).run();
                 break;
         }
     }

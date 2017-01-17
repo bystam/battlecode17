@@ -26,11 +26,14 @@ public class FortressMurderer extends Lumberjack {
         RobotInfo[] enemies = senseNearbyRobots(-1, getTeam().opponent());
         if(enemies != null && enemies.length > 0){
             for(RobotInfo enemy : enemies){
-                if(enemy.getLocation().distanceTo(getLocation()) <  GameConstants.LUMBERJACK_STRIKE_RADIUS ){
+                if(enemy.getLocation().distanceTo(getLocation()) < GameConstants.LUMBERJACK_STRIKE_RADIUS ){
                     strike();
                     return;
                 }
             }
+            System.out.println("moving towards enemy to strike");
+            roam(enemies[0].getLocation());
+            return;
         }
 
         if(job != null && job.distanceTo(getLocation()) > CLOSE){
@@ -70,5 +73,24 @@ public class FortressMurderer extends Lumberjack {
 
         }
         return murdered;
+    }
+
+
+    private void roam(MapLocation enemyTarget) throws GameActionException {
+        MapLocation target = enemyTarget != null ? getTargetLocation() : enemyTarget;
+        if (target != null) {
+            pathFindingAlgorithmMoveTowards(getTargetLocation());
+        } else {
+            if (canMove(roamingDirection)) {
+                move(roamingDirection);
+                roamingDirection = roamingDirection.rotateLeftDegrees(2);
+            } else {
+                roamingDirection = roamingDirection.rotateLeftDegrees(45);
+                if (canMove(roamingDirection)) {
+                    move(roamingDirection);
+                    roamingDirection = roamingDirection.rotateLeftDegrees(2);
+                }
+            }
+        }
     }
 }
