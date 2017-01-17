@@ -28,6 +28,10 @@ public abstract class RobotBase implements Robot {
         return rc.getType();
     }
 
+    public Team getTeam() {
+        return rc.getTeam();
+    }
+
 
     public MapLocation getLocation() {
         return rc.getLocation();

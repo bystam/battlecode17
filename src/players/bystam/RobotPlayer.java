@@ -10,6 +10,7 @@ import strategies.mapping.MappingScout;
 import strategies.maxproduction.MaxProductionArchon;
 import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
+import strategies.sixpool.SixPoolGardener;
 
 public strictfp class RobotPlayer {
 
@@ -23,7 +24,7 @@ public strictfp class RobotPlayer {
                 new MaxProductionArchon(rc).run();
                 break;
             case GARDENER:
-                getGardener(rc).run();
+                new SixPoolGardener(rc).run();
                 break;
             case LUMBERJACK:
                 new JunglerLumberjack(rc).run();

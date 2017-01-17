@@ -2,13 +2,18 @@ package common.robots;
 
 import battlecode.common.*;
 
+import java.util.Arrays;
+
 /**
  * Created by jens on 2017-01-10.
  */
 public abstract class Gardener extends RobotBase {
 
+    protected final RobotInfo archonCreator;
+
     public Gardener(RobotController r) {
         super(r);
+        archonCreator = getArchonCreator();
     }
 
     public boolean canWater(MapLocation mapLocation) {
@@ -63,6 +68,17 @@ public abstract class Gardener extends RobotBase {
         return rc.isBuildReady();
     }
 
+    private RobotInfo getArchonCreator() {
+        return Arrays.stream(senseNearbyRobots())
+                .filter( (r) -> {
+                    return r.getType() == RobotType.ARCHON && r.getTeam() == getTeam();
+                })
+                .sorted( (a1, a2) -> {
+                    return Float.compare(a1.getLocation().distanceTo(getLocation()),
+                                         a2.getLocation().distanceTo(getLocation()));
+                })
+                .findFirst().get();
+    }
 
     public boolean buildInAnyDirection(RobotType robotType) throws GameActionException {
         for (Direction direction : tools.getDirections()) {

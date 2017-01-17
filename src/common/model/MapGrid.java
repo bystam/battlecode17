@@ -11,13 +11,19 @@ public class MapGrid {
     public final Point origin;
     public final int width, height;
 
-    private final TreeInfo[][] treeGrid;
+    //private final TreeInfo[][] treeGrid;
 
     public MapGrid(MapLocation bottomLeft, MapLocation topRight) {
         this.origin = new Point(bottomLeft);
         this.width = (int)(topRight.x - bottomLeft.x);
         this.height = (int)(topRight.y - bottomLeft.y);
-        treeGrid = new TreeInfo[width][height];
+        //treeGrid = new TreeInfo[width][height];
+    }
+
+    public MapGrid(int originX, int originY, int width, int height) {
+        this.origin = new Point(originX, originY);
+        this.width = width;
+        this.height = height;
     }
 
     public void registerTrees(TreeInfo[] trees) {
@@ -27,16 +33,4 @@ public class MapGrid {
         }*/
     }
 
-    public static class Point {
-        public final int x, y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Point(MapLocation location) {
-            this((int)location.x, (int)location.y);
-        }
-    }
 }
