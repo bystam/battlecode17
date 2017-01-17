@@ -1,8 +1,6 @@
 package strategies.sixpool;
 
-import battlecode.common.GameActionException;
-import battlecode.common.MapLocation;
-import battlecode.common.RobotController;
+import battlecode.common.*;
 import common.model.MapGrid;
 import common.robots.Soldier;
 import strategies.mapping.MappingMemory;
@@ -27,7 +25,21 @@ public class SixPoolSoldier extends Soldier {
     public void step() throws GameActionException {
         if (awaitGrid()) return;
 
+        if (fireAtAnyOf(senseNearbyRobots(-1, getTeam().opponent()))) return;
+        if (fireAtAnyOf(senseNearbyTrees(-1, getTeam().opponent()))) return;
 
+        pathFindingAlgorithmMoveTowards(enemyLocation);
+    }
+
+    private boolean fireAtAnyOf(BodyInfo[] targets) throws GameActionException {
+        if (targets.length > 0) {
+            BodyInfo target = targets[0];
+            if (canFireSingleShot()) {
+                fireSingleShot(getLocation().directionTo(target.getLocation()));
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean awaitGrid() throws GameActionException {

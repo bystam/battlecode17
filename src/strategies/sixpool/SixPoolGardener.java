@@ -42,6 +42,11 @@ public class SixPoolGardener extends Gardener {
             return;
         }
 
+        Direction soldierDirection = Direction.getWest();
+        if (map.getTeamBullets() > 300 && canBuildRobot(RobotType.SOLDIER, soldierDirection)) {
+            buildRobot(RobotType.SOLDIER, soldierDirection);
+        }
+
         TreeInfo nearbyTree = getTreeToTheRightOfMe();
         float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
         if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){

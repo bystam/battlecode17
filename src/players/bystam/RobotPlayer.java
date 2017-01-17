@@ -12,6 +12,7 @@ import strategies.maxproduction.MaxProductionArchon;
 import strategies.maxproduction.PlantingGardener;
 import strategies.maxproduction.WateringGardener;
 import strategies.sixpool.SixPoolGardener;
+import strategies.sixpool.SixPoolSoldier;
 
 public strictfp class RobotPlayer {
 
@@ -32,6 +33,9 @@ public strictfp class RobotPlayer {
                 break;
             case SCOUT:
                 new MappingScout(rc).run();
+                break;
+            case SOLDIER:
+                new SixPoolSoldier(rc).run();
                 break;
         }
     }
