@@ -12,6 +12,7 @@ import common.robots.Archon;
 public class FortressArchon extends Archon{
 
     Direction corner;
+    FortressSharedMemory memory;
 
     public FortressArchon(RobotController r) {
         super(r);
@@ -28,6 +29,8 @@ public class FortressArchon extends Archon{
         float smallest = Math.abs(vertical.radians) > Math.abs(horizontal.radians) ? Math.abs(horizontal.radians) : Math.abs(vertical.radians);
 
         corner = new Direction(smallest + halfDiff);
+        memory = new FortressSharedMemory(r);
+
     }
 
     private MapLocation getMaxLocation(MapLocation[] locations){
@@ -48,6 +51,12 @@ public class FortressArchon extends Archon{
 
     @Override
     public void step() throws GameActionException {
-        moveTowardsCorner(corner);
+
+        if(moveTowardsCorner(corner)){
+            return;
+        }
+
+        //we're at the corner now, start by building 3 gardeners
+        memory.getAndIncrementCurrentIndex()
     }
 }

@@ -8,17 +8,17 @@ import common.wrappers.MemoryBase;
  */
 public class FortressSharedMemory extends MemoryBase {
 
-    private static final int ROBOT_COUNT_INDEX = 0;
+    private static final int GARDENER_COUNT_INDEX = 0;
 
 
     public FortressSharedMemory(RobotController rc) {
         super(rc, Offsets.FORTRESS);
     }
 
-    public int getAndIncrementCurrentIndex() {
+    public int getAndSetGardenerIndex() {
         try{
-            int index = this.getInt(ROBOT_COUNT_INDEX);
-            this.setInt(ROBOT_COUNT_INDEX, index+1);
+            int index = this.getInt(GARDENER_COUNT_INDEX);
+            this.setInt(GARDENER_COUNT_INDEX, index+1);
             return index;
         } catch (Exception e){
             e.printStackTrace();
