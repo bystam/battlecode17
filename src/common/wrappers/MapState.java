@@ -1,9 +1,6 @@
 package common.wrappers;
 
-import battlecode.common.GameActionException;
-import battlecode.common.MapLocation;
-import battlecode.common.RobotController;
-import battlecode.common.Team;
+import battlecode.common.*;
 
 /**
  * Created by jens on 2017-01-10.
@@ -76,8 +73,19 @@ public class MapState {
         return rc.isCircleOccupied(mapLocation, v);
     }
 
-    public boolean shouldPlantHorizontal() {
+    public Direction getPlantDirection() {
         MapLocation[] enemyLocations = getInitialArchonLocations(getTeam().opponent());
-        return true;
+        MapLocation enemyMaxLocation = Tools.getMaxLocation(enemyLocations);
+
+        MapLocation[] myLocations = getInitialArchonLocations(getTeam());
+        MapLocation myLocation = Tools.getMaxLocation(myLocations);
+
+        if(Math.abs(enemyMaxLocation.x - myLocation.x) > 5){ //enemy is to the east or west, plant vertical
+            return enemyMaxLocation.x > myLocation.x ? Direction.EAST : Direction.WEST;
+        }
+        else if(Math.abs(enemyMaxLocation.y - myLocation.y) > 5){ //enemy is above or below, plant horizontal
+            return enemyMaxLocation.y > myLocation.y ? Direction.NORTH : Direction.SOUTH;
+        }
+        return Direction.SOUTH; //dunno
     }
 }

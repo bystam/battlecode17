@@ -6,6 +6,10 @@ import common.wrappers.MapState;
 import common.Robot;
 import common.wrappers.Tools;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by jens on 2017-01-10.
  */
@@ -32,6 +36,9 @@ public abstract class RobotBase implements Robot {
         }
 
         serialNumberOfType = serial;
+
+        enemyLocations = new ArrayList<>(Arrays.asList(map.getInitialArchonLocations(getTeam().opponent())));
+        roamingDirection = Direction.getNorth();
     }
 
     public int getID() {
@@ -397,5 +404,39 @@ public abstract class RobotBase implements Robot {
         }
 
         return false;
+    }
+
+    protected List<MapLocation> enemyLocations;
+    protected Direction roamingDirection;
+
+    protected void roam() throws GameActionException {
+        MapLocation target = getTargetLocation();
+        if (target != null) {
+            pathFindingAlgorithmMoveTowards(getTargetLocation());
+        } else {
+            if (canMove(roamingDirection)) {
+                move(roamingDirection);
+                roamingDirection = roamingDirection.rotateLeftDegrees(2);
+            } else {
+                roamingDirection = roamingDirection.rotateLeftDegrees(45);
+                if (canMove(roamingDirection)) {
+                    move(roamingDirection);
+                    roamingDirection = roamingDirection.rotateLeftDegrees(2);
+                }
+            }
+        }
+    }
+
+    protected MapLocation getTargetLocation() {
+        if (enemyLocations.isEmpty()) {
+            return null;
+        }
+
+        MapLocation next = enemyLocations.get(0);
+        if (getLocation().distanceTo(next) < 3) {
+            enemyLocations.remove(0);
+            return getTargetLocation();
+        }
+        return next;
     }
 }

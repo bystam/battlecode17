@@ -8,18 +8,23 @@ import common.robots.Gardener;
  */
 public class FortressGardener extends Gardener{
 
+    private final int MAX_LINE_LEN = 8;
+
     private final FortressSharedMemory memory;
-    private float y;
+    private float coord;
     private float GARDEN_MARGIN = 10f;
     private boolean startedPlanting = false;
     private int lineLength = 0;
-    private boolean horizontal = false;
+    private boolean lineIsHorizontal = false;
+    Direction plantDirection;
 
     public FortressGardener(RobotController r, int yIndex) {
         super(r);
         memory = new FortressSharedMemory(r);
-        horizontal = map.shouldPlantHorizontal();
-        this.y = this.getLocation().y - ((3-yIndex) * GARDEN_MARGIN);
+        plantDirection = map.getPlantDirection();
+        lineIsHorizontal = plantDirection == Direction.SOUTH ||plantDirection == Direction.NORTH;
+
+        this.coord = this.getLocation().y - (yIndex * GARDEN_MARGIN);
     }
 
     @Override
@@ -29,24 +34,18 @@ public class FortressGardener extends Gardener{
             return;
         }
         startedPlanting = true;
-
-
         //now at westmost point. start planting trees until some x
-        if(canPlantTree(Direction.getSouth()) && lineLength < 8){
-            plantTree(Direction.getSouth());
+        if(canPlantTree(plantDirection) && lineLength < MAX_LINE_LEN){
+            plantTree(plantDirection);
             lineLength++;
             return;
         }
 
         TreeInfo[] nearbyTrees = senseNearbyTrees(getLocation(), -1, getTeam());
-        if(nearbyTrees != null && nearbyTrees.length > 0){
-            TreeInfo nearbyTree = nearbyTrees[0];
-            float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
-            if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
-                water(nearbyTree.getID());
-                return;
-            }
+        if(waterIfNearbyTree()){
+
         }
+
 
         boolean canMoveAlongLine = canMove(Direction.getEast());
         boolean treesBlockingLine = nearbyTrees != null && nearbyTrees.length > 0;
@@ -69,12 +68,25 @@ public class FortressGardener extends Gardener{
         }
     }
 
+    private boolean waterIfNearbyTree() throws GameActionException {
+        TreeInfo[] nearbyTrees = senseNearbyTrees(getLocation(), -1, getTeam());
+        if(nearbyTrees != null && nearbyTrees.length > 0){
+            TreeInfo nearbyTree = nearbyTrees[0];
+            float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
+            if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
+                water(nearbyTree.getID());
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean goToStartingPosition() throws GameActionException {
         if(startedPlanting){
             return false;
         }
-        if(Math.abs(getLocation().y - y) > 0.05f){
-            MapLocation loco = new MapLocation(getLocation().x, y);
+        if(Math.abs(getLocation().y - coord) > 0.05f){
+            MapLocation loco = new MapLocation(getLocation().x, coord);
             if(canMove(loco)){
                 move(loco);
                 return true;

@@ -84,7 +84,7 @@ public class Tools {
     }
 
 
-    private static MapLocation getMaxLocation(MapLocation[] locations){
+    public static MapLocation getMaxLocation(MapLocation[] locations){
         float maxX = Integer.MIN_VALUE;
         float maxY = Integer.MIN_VALUE;
 

@@ -22,9 +22,17 @@ public class FortressMurderer extends Lumberjack {
 
     @Override
     public void step() throws GameActionException {
-        if(map.getRoundNum() % 50 == 0){
-            throw new SuicideException();
+
+        RobotInfo[] enemies = senseNearbyRobots(-1, getTeam().opponent());
+        if(enemies != null && enemies.length > 0){
+            for(RobotInfo enemy : enemies){
+                if(enemy.getLocation().distanceTo(getLocation()) <  GameConstants.LUMBERJACK_STRIKE_RADIUS ){
+                    strike();
+                    return;
+                }
+            }
         }
+
         if(job != null && job.distanceTo(getLocation()) > CLOSE){
             System.out.println("moving towards job " + job);
             pathFindingAlgorithmMoveTowards(job);
@@ -42,10 +50,11 @@ public class FortressMurderer extends Lumberjack {
         }
 
         job = memory.popMurdererJob();
-        if(job == null){
+        if(job != null){
+            pathFindingAlgorithmMoveTowards(job);
             return;
         }
-        pathFindingAlgorithmMoveTowards(job);
+        roam();
 
     }
 
