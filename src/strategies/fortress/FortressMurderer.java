@@ -2,7 +2,6 @@ package strategies.fortress;
 
 import battlecode.common.*;
 import common.robots.Lumberjack;
-import common.robots.SuicideException;
 
 import java.util.Arrays;
 
@@ -26,12 +25,11 @@ public class FortressMurderer extends Lumberjack {
         RobotInfo[] enemies = senseNearbyRobots(-1, getTeam().opponent());
         if(enemies != null && enemies.length > 0){
             for(RobotInfo enemy : enemies){
-                if(enemy.getLocation().distanceTo(getLocation()) < GameConstants.LUMBERJACK_STRIKE_RADIUS ){
+                if(enemy.getLocation().distanceTo(getLocation())-2 < GameConstants.LUMBERJACK_STRIKE_RADIUS ){
                     strike();
                     return;
                 }
             }
-            System.out.println("moving towards enemy to strike");
             roam(enemies[0].getLocation());
             return;
         }
