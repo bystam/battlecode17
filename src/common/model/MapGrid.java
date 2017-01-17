@@ -15,16 +15,16 @@ public class MapGrid {
 
     public MapGrid(MapLocation bottomLeft, MapLocation topRight) {
         this.origin = new Point(bottomLeft);
-        this.width = Math.round(topRight.x - bottomLeft.x);
-        this.height = Math.round(topRight.y - bottomLeft.y);
+        this.width = (int)(topRight.x - bottomLeft.x);
+        this.height = (int)(topRight.y - bottomLeft.y);
         treeGrid = new TreeInfo[width][height];
     }
 
     public void registerTrees(TreeInfo[] trees) {
-        for (TreeInfo tree : trees) {
+        /*for (TreeInfo tree : trees) {
             Point p = new Point(tree.getLocation());
             treeGrid[p.x - origin.x][p.y - origin.y] = tree;
-        }
+        }*/
     }
 
     public static class Point {
@@ -36,7 +36,7 @@ public class MapGrid {
         }
 
         public Point(MapLocation location) {
-            this(Math.round(location.x), Math.round(location.y));
+            this((int)location.x, (int)location.y);
         }
     }
 }
