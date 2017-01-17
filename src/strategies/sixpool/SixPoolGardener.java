@@ -44,7 +44,7 @@ public class SixPoolGardener extends Gardener {
 
         TreeInfo nearbyTree = getTreeToTheRightOfMe();
         float missingHealth = nearbyTree.getMaxHealth() - nearbyTree.getHealth();
-        if (nearbyTree != null && missingHealth < -10 && canWater(nearbyTree.getID())){
+        if (nearbyTree != null && missingHealth > 10 && canWater(nearbyTree.getID())){
             water(nearbyTree.getID());
             return;
         }
