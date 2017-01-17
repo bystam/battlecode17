@@ -39,7 +39,7 @@ public class SixPoolGardener extends Gardener {
 
         Direction plantDirection = Direction.getEast();
         if (canPlantTree(plantDirection)) {
-            plantTree(plantDirection );
+            plantTree(plantDirection);
             return;
         }
 
