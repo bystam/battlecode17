@@ -3,6 +3,7 @@ package players.bystam;
 import battlecode.common.*;
 import common.robots.Gardener;
 import strategies.coward.LimitedArchon;
+import strategies.fortress.FortressMurderer;
 import strategies.jungler.JunglerGardener;
 import strategies.jungler.JunglerLumberjack;
 import strategies.mapping.MappingGardener;
@@ -29,7 +30,7 @@ public strictfp class RobotPlayer {
                 new SixPoolGardener(rc).run();
                 break;
             case LUMBERJACK:
-                new JunglerLumberjack(rc).run();
+                new FortressMurderer(rc).run();
                 break;
             case SCOUT:
                 new MappingScout(rc).run();

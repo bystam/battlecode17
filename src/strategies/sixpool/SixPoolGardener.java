@@ -63,13 +63,12 @@ public class SixPoolGardener extends Gardener {
             }
         }
 
-//        if (!hasCreatedLumberjack) {
-//            boolean success = buildInAnyDirection(RobotType.LUMBERJACK);
-//            if (success) {
-//                hasCreatedLumberjack = true;
-//            }
-//            return;
-//        }
+        if (!hasCreatedLumberjack) {
+            boolean success = buildInAnyDirection(RobotType.LUMBERJACK);
+            if (success) {
+                hasCreatedLumberjack = true;
+            }
+        }
     }
 
     private boolean procudeScout() throws GameActionException {

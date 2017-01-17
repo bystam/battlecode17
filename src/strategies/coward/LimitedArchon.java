@@ -1,7 +1,7 @@
 package strategies.coward;
 
-import battlecode.common.GameActionException;
-import battlecode.common.RobotController;
+import battlecode.common.*;
+import common.Robot;
 import common.robots.Archon;
 
 /**
@@ -23,8 +23,32 @@ public class LimitedArchon extends Archon {
             return;
         }
 
-        if (hireInAnyDirection()) {
+        if (buildGardenerTowardEnemy()) {
             gardenersBuilt++;
         }
+    }
+
+    private boolean buildGardenerTowardEnemy() throws GameActionException {
+        MapLocation enemy = map.getInitialArchonLocations(getTeam().opponent())[0];
+        Direction direction = getLocation().directionTo(enemy);
+        if (canBuildRobot(RobotType.GARDENER, direction)) {
+            buildRobot(RobotType.GARDENER, direction);
+            return true;
+        }
+
+        return wiggleBuildInDirection(direction, 10);
+    }
+
+    private boolean wiggleBuildInDirection(Direction direction, int tries) throws GameActionException {
+        for (int i = 0; i < tries; i++) {
+            float randomDegrees = (float)(Math.random() - 0.5) * 90;
+            Direction wiggledDirection = direction.rotateLeftDegrees(randomDegrees);
+
+            if (canBuildRobot(RobotType.GARDENER, wiggledDirection)) {
+                buildRobot(RobotType.GARDENER, wiggledDirection);
+                return true;
+            }
+        }
+        return false;
     }
 }
