@@ -25,7 +25,7 @@ public class FortressMurderer extends Lumberjack {
         RobotInfo[] enemies = senseNearbyRobots(-1, getTeam().opponent());
         if(enemies != null && enemies.length > 0){
             for(RobotInfo enemy : enemies){
-                if(enemy.getLocation().distanceTo(getLocation())-2 < GameConstants.LUMBERJACK_STRIKE_RADIUS ){
+                if(enemy.getLocation().distanceTo(getLocation())-1 < GameConstants.LUMBERJACK_STRIKE_RADIUS ){
                     strike();
                     return;
                 }
